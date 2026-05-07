@@ -24,55 +24,52 @@
             overflow-x: hidden;
         }
 
-        /* خلفية النجوم */
+        /* المؤثرات البصرية */
         #stars-canvas { position: fixed; inset: 0; z-index: -2; background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%); }
-
-        /* شاشة الدخول */
-        #lock-screen {
-            position: fixed; inset: 0; background: var(--bg); z-index: 1000;
-            display: flex; align-items: center; justify-content: center; transition: 1s ease-in-out;
-        }
-
-        .login-box {
-            background: var(--card-bg); backdrop-filter: blur(15px); border: 1px solid #30363d;
-            padding: 40px 20px; border-radius: 30px; text-align: center; width: 90%; max-width: 400px;
-        }
-
-        input#pass-input {
-            width: 85%; padding: 15px; border-radius: 15px; border: 1px solid #30363d;
-            background: #0d1117; color: white; text-align: center; font-size: 18px; margin-bottom: 20px; outline: none;
-        }
-
-        /* عداد الرضا */
         #progress-container { position: fixed; top: 0; left: 0; width: 0%; height: 5px; background: var(--primary); z-index: 2000; transition: 0.3s; }
 
+        /* شاشة الدخول */
+        #lock-screen { position: fixed; inset: 0; background: var(--bg); z-index: 1000; display: flex; align-items: center; justify-content: center; transition: 1s ease-in-out; }
+        .login-box { background: var(--card-bg); backdrop-filter: blur(15px); border: 1px solid #30363d; padding: 40px 20px; border-radius: 30px; text-align: center; width: 90%; max-width: 400px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        input#pass-input { width: 85%; padding: 15px; border-radius: 15px; border: 1px solid #30363d; background: #0d1117; color: white; text-align: center; font-size: 18px; margin-bottom: 20px; outline: none; }
+        .login-btn { background: var(--primary); color: white; padding: 15px 40px; border: none; border-radius: 15px; font-weight: bold; cursor: pointer; width: 100%; font-size: 18px; }
+
+        /* الأقسام التسلسلية */
         .container { width: 95%; max-width: 500px; display: none; flex-direction: column; gap: 25px; padding: 40px 0; z-index: 10; }
+        .section { display: none; flex-direction: column; gap: 20px; animation: slideUp 1.5s ease-out forwards; }
+        .card { background: var(--card-bg); border: 1px solid #30363d; padding: 25px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
 
-        .card { background: var(--card-bg); border: 1px solid #30363d; padding: 25px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); animation: slideUp 1s ease-out; }
-
-        h1 { color: var(--primary); font-size: 32px; text-align: center; font-family: 'Arial Black'; }
-
+        h1 { color: var(--primary); font-size: 32px; text-align: center; font-family: 'Arial Black'; margin: 0; }
         .timer-box { text-align: center; background: rgba(46, 160, 67, 0.1); padding: 15px; border-radius: 20px; border: 1px solid rgba(46, 160, 67, 0.3); }
         #timer { font-weight: bold; color: var(--primary); font-size: 19px; direction: ltr; }
 
-        /* سجل الصراحة */
-        .trust-box { border: 1px solid var(--primary); background: rgba(46, 160, 67, 0.05); padding: 20px; border-radius: 20px; text-align: right; line-height: 1.8; }
+        .type-txt { line-height: 1.8; text-align: center; font-size: 17px; min-height: 50px; color: #58a6ff; }
 
-        .note-box { background: rgba(227, 179, 65, 0.08); border-right: 6px solid #e3b341; padding: 25px; border-radius: 15px; color: #e3b341; font-weight: bold; line-height: 1.9; }
+        /* سجل الثقة */
+        .trust-log { border: 1px solid var(--primary); background: rgba(46, 160, 67, 0.05); padding: 20px; border-radius: 20px; text-align: right; line-height: 1.8; }
 
-        /* الذكريات */
-        .memory-btn { background: #161b22; border: 1px solid #30363d; color: #58a6ff; padding: 12px; border-radius: 12px; cursor: pointer; margin-bottom: 10px; width: 100%; text-align: center; transition: 0.3s; }
-        .memory-btn:hover { border-color: var(--primary); transform: scale(1.02); }
+        /* كروت Polaroid الذكريات */
+        .reasons-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 10px 0; }
+        .polaroid { background: white; padding: 10px 10px 20px 10px; transform: rotate(var(--r)); transition: 0.3s; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        .polaroid:hover { transform: rotate(0deg) scale(1.05); z-index: 5; }
+        .polaroid-img { height: 70px; background: #eee; display: flex; align-items: center; justify-content: center; font-size: 25px; margin-bottom: 8px; }
+        .polaroid-text { color: #333; font-size: 11px; font-weight: bold; text-align: center; }
 
-        /* الزراير */
-        .choice-box { display: flex; flex-direction: row; justify-content: space-around; align-items: center; height: 150px; position: relative; margin-top: 20px; }
+        .note-box { background: rgba(227, 179, 65, 0.08); border-right: 6px solid #e3b341; padding: 20px; border-radius: 15px; color: #e3b341; font-weight: bold; line-height: 1.8; }
+
+        /* الزراير جنب بعض بوضوح */
+        .choice-box {
+            display: flex; flex-direction: row; justify-content: center; align-items: center; 
+            gap: 40px; height: 150px; position: relative; margin-top: 20px;
+        }
         .btn { padding: 15px 25px; border-radius: 15px; font-weight: bold; cursor: pointer; border: none; font-size: 16px; min-width: 140px; text-align: center; }
-        .btn-yes { background: #25D366; color: white; text-decoration: none; display: flex; flex-direction: column; align-items: center; z-index: 10; }
-        .btn-no { background: #da3633; color: white; position: absolute; }
+        .btn-yes { background: #25D366; color: white; text-decoration: none; display: flex; flex-direction: column; align-items: center; z-index: 10; box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3); }
+        .btn-yes small { font-size: 9px; opacity: 0.8; margin-top: 4px; }
+        .btn-no { background: #da3633; color: white; white-space: nowrap; position: absolute; left: 50%; margin-left: 20px; }
         
         #sabah-joke {
             position: fixed; color: #ff4d6d; font-weight: bold; display: none;
-            background: white; padding: 10px 15px; border-radius: 50px; font-size: 13px;
+            background: white; padding: 8px 12px; border-radius: 50px; font-size: 13px;
             z-index: 100; box-shadow: 0 10px 20px rgba(0,0,0,0.4); border: 2px solid #ff4d6d; white-space: nowrap;
         }
 
@@ -89,93 +86,73 @@
 
     <div id="lock-screen">
         <div class="login-box">
-            <h2 style="font-family: Arial;">🔒 Nancy's Private Gate</h2>
+            <h2 style="font-family: Arial;">🔒 Nancy's Private Access</h2>
             <p>عملت حاجة صغيرة عشان أعرف أصالحك بيها يا Nancy..<br><b>كلمة السر هي: sory</b></p>
             <input type="password" id="pass-input" placeholder="اكتبي sory هنا...">
-            <button onclick="unlock()" style="background:var(--primary); color:white; padding:15px 40px; border:none; border-radius:12px; font-weight:bold; cursor:pointer; width:100%;">فتح المفاجأة ✨</button>
+            <button onclick="unlock()" class="login-btn">فتح المفاجأة ✨</button>
         </div>
     </div>
 
     <div id="player"></div>
 
-    <div class="container" id="main-container" style="display:none; padding: 40px 0;">
+    <div class="container" id="main-container">
         
-        <div class="card">
-            <h1>Hello, Nancy! ✅</h1>
-            <div class="timer-box">
-                <p style="margin: 0 0 8px; font-size: 14px; color: #8b949e;">الوقت اللي ضاع مننا من إمبارح الساعة 8 مساءً:</p>
-                <div id="timer">00:00:00:00</div>
+        <div id="sec1" class="section">
+            <div class="card">
+                <h1>Hello, Nancy! ✅</h1>
+                <div class="timer-box">
+                    <p style="margin: 0 0 8px; font-size: 14px; color: #8b949e;">الوقت اللي ضاع مننا من إمبارح الساعة 8 مساءً:</p>
+                    <div id="timer">00:00:00:00</div>
+                </div>
             </div>
         </div>
 
-        <div class="card" style="border: 1px dashed #58a6ff; text-align: center;">
-            <h4 style="color: #58a6ff; margin-top: 0;">🎵 ليه اخترت الأغنية دي؟</h4>
-            <p style="line-height: 1.7;">عشان مهما زعلنا، الأغنية دي هي الحقيقة اللي في قلبي.. إنك مهما عملتي، هتفضلي في نظري <b>"زي ما أنتي"</b> أغلى وأحلى Nancy في الدنيا.</p>
-        </div>
-
-        <div class="trust-box">
-            <h4 style="color: var(--primary); margin: 0 0 10px 0;">📜 سجل الصراحة والوضوح:</h4>
-            يا Nancy، أنا عمري ما كذبت عليكي في حرف.. كنت دايمًا باجري عليكي أنتي أول واحدة أحكيلك كل حاجة بتحصلي، <b>الوحشة قبل الحلوة</b>.. وده كان أكبر دليل إني ماليش غيرك وإني متمسك بيكي. الشك ملوش مكان بينا.
-        </div>
-
-        <div class="card">
-            <h4 style="color: #ff4d6d; margin: 0 0 15px 0; text-align: center;">💎 ذكرياتنا اللي مستحيل أنساها:</h4>
-            <div class="memory-btn" onclick="alert('فاكرة يوم 20 أبريل؟ أول خروجة لينا سوا.. اليوم ده محفور في قلبي بتفاصيله ❤️')">
-                أول خروجة (20 أبريل) 👫
+        <div id="sec2" class="section">
+            <div class="card" style="border: 1px dashed #58a6ff;">
+                <h4 style="color: #58a6ff; margin-top: 0; text-align: center;">🎵 ليه اخترت الأغنية دي؟</h4>
+                <p id="type-song" class="type-txt"></p>
             </div>
-            <div class="memory-btn" onclick="alert('أحلى حاجة بينا إنك أول واحدة بجري عليها في أي حاجة وحشة قبل الحلوة.. أنتي سندي ✨')">
-                أنتي أول واحدة بعرفها 🔒
-            </div>
-            <div class="memory-btn" onclick="alert('ضحكتك اللي بتنسيني الدنيا وما فيها.. متهونش عليكي التكشيرة بقى 😊')">
-                أغلى ضحكة 💖
+            <div class="reasons-grid">
+                <div class="polaroid" style="--r: -3deg" onclick="alert('فاكرة يوم 20 أبريل؟ أول خروجة لينا سوا وكل تفاصيلها اللي محفورة في قلبي ❤️')"><div class="polaroid-img">👫</div><div class="polaroid-text">20 أبريل</div></div>
+                <div class="polaroid" style="--r: 2deg" onclick="alert('ضحكتك اللي بتنسيني أي تعب في يومي، متهونش عليكي التكشيرة بقى 😊')"><div class="polaroid-img">😊</div><div class="polaroid-text">أحلى ضحكة</div></div>
             </div>
         </div>
 
-        <div class="note-box">
-            💡 ملحوظة غالية جداً: رغم إننا عارفين مين اللي غلط في حق مين المرة دي.. ورغم إن "السيستم" بيقول إنك أنتي اللي غلطانة، بس قلبي مسمحليش أكون قاسي عليكي، وقررت أنا اللي أبادر وأصالحك وأرضيكي.. لأن رضاكي عندي أهم من مين صح ومين غلط. ✨
+        <div id="sec3" class="section">
+            <div class="trust-log">
+                <h4 style="color: var(--primary); margin: 0 0 10px 0;">📜 سجل الصراحة والوضوح:</h4>
+                <p style="margin: 0;">يا Nancy، أنا عمري ما كذبت عليكي في حرف.. كنت دايمًا باجري عليكي أنتي أول واحدة أحكيلك كل حاجة بتحصلي، <b>الوحشة قبل الحلوة</b>.. وده كان أكبر دليل إني ماليش غيرك وإني متمسك بيكي. الشك ملوش مكان بينا.</p>
+            </div>
         </div>
 
-        <div class="card" style="text-align: center; overflow: visible;">
-            <p style="font-size: 20px; font-weight: bold; margin-bottom: 20px;">صافي يا لبن؟ ❤️</p>
-            <div id="sabah-joke">مش هتعرفي تدوسي عليه يبنت صباح 😂</div>
-            <div class="choice-box">
-                <a href="https://wa.me/201141443841?text=أنا%20سمعت%20الأغنية%20وقريت%20الكلام%20يا%20Nancy..%20وصافية%20يا%20لبن%20يا%20أغلى%20حاجة%20عندي%20❤️" class="btn btn-yes">
-                    أيوة طبعاً ❤️
-                    <span style="font-size: 10px; font-weight: normal;">(الرد هيروح واتساب فوراً)</span>
-                </a>
-                <button class="btn btn-no" id="noBtn" onmouseover="moveNo()">لأ لسه زعلانة 😤</button>
+        <div id="sec4" class="section">
+            <div class="note-box">
+                💡 ملحوظة غالية جداً: رغم إننا عارفين مين اللي غلط في حق مين المرة دي.. ورغم إن "السيستم" بيقول إنك أنتي اللي غلطانة، بس قلبي مسمحليش أكون قاسي عليكي، وقررت أنا اللي أبادر وأصالحك وأرضيكي.. لأن رضاكي عندي أهم من مين صح ومين غلط. ✨
+            </div>
+        </div>
+
+        <div id="sec5" class="section">
+            <div class="card" style="text-align: center; position: relative; overflow: visible;">
+                <p style="font-size: 20px; font-weight: bold; margin-bottom: 25px;">صافي يا لبن؟ ❤️</p>
+                <div id="sabah-joke">مش هتعرفي تدوسي عليه يبنت صباح 😂</div>
+                <div class="choice-box">
+                    <a href="https://wa.me/201141443841?text=أنا%20سمعت%20الأغنية%20وقريت%20الكلام%20يا%20Nancy..%20وصافية%20يا%20لبن%20يا%20أغلى%20حاجة%20عندي%20❤️" class="btn btn-yes">أيوة طبعاً ❤️ <small>(الرد هيروح واتساب)</small></a>
+                    <button class="btn btn-no" id="noBtn" onmouseover="moveNo()">لأ لسه زعلانة 😤</button>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // إعداد النجوم في الخلفية
-        const canvas = document.getElementById('stars-canvas');
-        const ctx = canvas.getContext('2d');
-        let stars = [];
-        function initStars() {
-            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-            for(let i=0; i<150; i++) stars.push({x: Math.random()*canvas.width, y: Math.random()*canvas.height, size: Math.random()*2, speed: Math.random()*0.5});
-        }
-        function drawStars() {
-            ctx.clearRect(0,0,canvas.width, canvas.height);
-            ctx.fillStyle = "white";
-            stars.forEach(s => { ctx.beginPath(); ctx.arc(s.x, s.y, s.size, 0, Math.PI*2); ctx.fill(); s.y -= s.speed; if(s.y<0) s.y=canvas.height; });
-            requestAnimationFrame(drawStars);
-        }
+        const canvas = document.getElementById('stars-canvas'); const ctx = canvas.getContext('2d'); let stars = [];
+        function initStars() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; for(let i=0; i<120; i++) stars.push({x: Math.random()*canvas.width, y: Math.random()*canvas.height, size: Math.random()*2, speed: Math.random()*0.5}); }
+        function drawStars() { ctx.clearRect(0,0,canvas.width, canvas.height); ctx.fillStyle = "white"; stars.forEach(s => { ctx.beginPath(); ctx.arc(s.x, s.y, s.size, 0, Math.PI*2); ctx.fill(); s.y -= s.speed; if(s.y<0) s.y=canvas.height; }); requestAnimationFrame(drawStars); }
 
-        // يوتيوب
         var tag = document.createElement('script'); tag.src = "https://www.youtube.com/iframe_api";
         var firstScriptTag = document.getElementsByTagName('script')[0]; firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-        var player;
-        function onYouTubeIframeAPIReady() { player = new YT.Player('player', { height: '0', width: '0', videoId: 'NYntUyksG5E', events: { 'onReady': () => {} } }); }
+        var player; function onYouTubeIframeAPIReady() { player = new YT.Player('player', { height: '0', width: '0', videoId: 'NYntUyksG5E', events: { 'onReady': () => {} } }); }
 
-        // عداد الوقت والرضا
-        window.onscroll = function() {
-            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            document.getElementById("progress-container").style.width = (winScroll / height) * 100 + "%";
-        };
+        window.onscroll = function() { let h = document.documentElement.scrollHeight - document.documentElement.clientHeight; document.getElementById("progress-container").style.width = (window.scrollY / h) * 100 + "%"; };
 
         function updateTimer() {
             const diff = new Date() - new Date("2026-05-06T20:00:00");
@@ -183,39 +160,48 @@
             document.getElementById('timer').innerText = `${d}d : ${h}h : ${m}m : ${s}s`;
         }
 
+        function typeEffect(el, text, speed, cb) {
+            let i = 0; function type() { if(i < text.length) { el.innerHTML += text.charAt(i); i++; setTimeout(type, speed); } else if(cb) cb(); } type();
+        }
+
         function unlock() {
             if(document.getElementById('pass-input').value === 'sory') {
                 document.getElementById('lock-screen').style.opacity = '0';
-                setTimeout(() => {
-                    document.getElementById('lock-screen').style.display = 'none';
-                    document.getElementById('main-container').style.display = 'flex';
-                    player.playVideo(); setInterval(updateTimer, 1000); startHearts();
-                    initStars(); drawStars();
-                }, 1000);
+                setTimeout(startSequence, 1000);
             } else { alert("كلمة السر sory يا Nancy!"); }
         }
 
-        const jokes = [
-            "مش هتعرفي تدوسي عليه يبنت صباح 😂",
-            "الشك مسيطر أوي 😂",
-            "والله ما أنتي دايسة 😂",
-            "صالحيني بقى يا بنتي خلاص 😂"
-        ];
-        function moveNo() {
-            const btn = document.getElementById('noBtn'); const joke = document.getElementById('sabah-joke');
-            const x = Math.random() * (window.innerWidth - 150), y = Math.random() * (window.innerHeight - 100);
-            btn.style.left = x + 'px'; btn.style.top = y + 'px'; btn.style.position = 'fixed';
-            joke.style.display = 'block'; joke.innerHTML = jokes[Math.floor(Math.random()*jokes.length)];
-            joke.style.left = x + 'px'; joke.style.top = (y-50) + 'px'; joke.style.position = 'fixed';
+        async function startSequence() {
+            document.getElementById('lock-screen').style.display = 'none';
+            document.getElementById('main-container').style.display = 'flex';
+            player.playVideo(); setInterval(updateTimer, 1000); initStars(); drawStars(); startHearts();
+            
+            show('sec1'); await sleep(2000);
+            show('sec2'); 
+            typeEffect(document.getElementById('type-song'), "عشان مهما زعلنا، الأغنية دي هي الحقيقة اللي في قلبي.. إنك مهما عملتي، هتفضلي في نظري 'زي ما أنتي' أغلى وأحلى Nancy في الدنيا.", 50, async () => {
+                await sleep(1000); show('sec3'); 
+                await sleep(3000); show('sec4'); 
+                await sleep(3000); show('sec5');
+            });
         }
 
-        function startHearts() {
-            setInterval(() => {
-                const h = document.createElement('div'); h.classList.add('heart'); h.innerHTML = Math.random()>0.3?'❤️':'🌸';
-                h.style.left = Math.random()*100+'vw'; h.style.bottom = '-20px'; h.style.fontSize = (Math.random()*20+15)+'px';
-                document.body.appendChild(h); setTimeout(() => h.remove(), 4000);
-            }, 300);
+        function show(id) { document.getElementById(id).style.display = 'flex'; }
+        function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
+
+        const jokes = ["مش هتعرفي تدوسي عليه يبنت صباح 😂", "الشك مسيطر أوي ليه كدة؟ 😂", "والله ما أنتي دايسة يا نانسي 😂", "صالحيني بقى يا بنتي خلاص 😂", "الزرار ده زينة بس النهاردة 😂"];
+        function moveNo() {
+            const btn = document.getElementById('noBtn'); const joke = document.getElementById('sabah-joke');
+            const x = Math.random()*(window.innerWidth - 180), y = Math.random()*(window.innerHeight - 100);
+            btn.style.left = x+'px'; btn.style.top = y+'px'; btn.style.position = 'fixed';
+            joke.style.display = 'block'; joke.innerHTML = jokes[Math.floor(Math.random()*jokes.length)];
+            joke.style.left = x+'px'; joke.style.top = (y-50)+'px'; joke.style.position = 'fixed';
         }
+
+        function startHearts() { setInterval(() => {
+            const h = document.createElement('div'); h.classList.add('heart'); h.innerHTML = Math.random()>0.3?'❤️':'🌸';
+            h.style.left = Math.random()*100+'vw'; h.style.bottom = '-20px'; h.style.fontSize = (Math.random()*20+15)+'px';
+            document.body.appendChild(h); setTimeout(() => h.remove(), 4000);
+        }, 300); }
     </script>
 </body>
 </html>
