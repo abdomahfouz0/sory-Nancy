@@ -3,267 +3,238 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For Nancy ❤️</title>
+    <title>مملكة السعادة الخاصة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --primary: #2ea043;
-            --accent: #ff4d6d;
-            --bg: #0d1117;
-            --card-bg: rgba(22, 27, 34, 0.96);
+            --primary-color: #5d4037;
+            --accent-color: #d81b60;
+            --glass-bg: rgba(255, 255, 255, 0.25);
+            --glass-border: rgba(255, 255, 255, 0.4);
         }
+
+        * { box-sizing: border-box; }
 
         body {
-            background-color: var(--bg);
-            color: #c9d1d9;
-            font-family: 'Segoe UI', Tahoma, sans-serif;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            overflow-x: hidden;
+            margin: 0; padding: 0; font-family: 'Cairo', sans-serif;
+            height: 100vh; display: flex; justify-content: center; align-items: center;
+            overflow: hidden; cursor: crosshair;
+            background: linear-gradient(-45deg, #fdfcfb, #e2d1c3, #f5f7fa, #c3cfe2);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
         }
 
-        /* المؤثرات البصرية */
-        #stars-canvas { position: fixed; inset: 0; z-index: -2; background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%); }
-        #progress-container { position: fixed; top: 0; left: 0; width: 0%; height: 5px; background: var(--primary); z-index: 2000; transition: 0.3s; }
-
-        /* شاشة الدخول */
-        #lock-screen { position: fixed; inset: 0; background: var(--bg); z-index: 1000; display: flex; align-items: center; justify-content: center; transition: 1s ease-in-out; }
-        .login-box { background: var(--card-bg); backdrop-filter: blur(15px); border: 1px solid #30363d; padding: 40px 20px; border-radius: 30px; text-align: center; width: 90%; max-width: 400px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
-        input#pass-input { width: 85%; padding: 15px; border-radius: 15px; border: 1px solid #30363d; background: #0d1117; color: white; text-align: center; font-size: 18px; margin-bottom: 20px; outline: none; }
-        .login-btn { background: var(--primary); color: white; padding: 15px 40px; border: none; border-radius: 15px; font-weight: bold; cursor: pointer; width: 100%; font-size: 18px; }
-
-        /* الأقسام التسلسلية */
-        .container { width: 95%; max-width: 500px; display: none; flex-direction: column; gap: 25px; padding: 40px 0; z-index: 10; }
-        .section { display: none; flex-direction: column; gap: 20px; animation: slideUp 1.5s ease-out forwards; }
-        .card { background: var(--card-bg); border: 1px solid #30363d; padding: 25px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-
-        h1 { color: var(--primary); font-size: 32px; text-align: center; font-family: 'Arial Black'; margin: 0; }
-        .timer-box { text-align: center; background: rgba(46, 160, 67, 0.1); padding: 15px; border-radius: 20px; border: 1px solid rgba(46, 160, 67, 0.3); }
-        #timer { font-weight: bold; color: var(--primary); font-size: 19px; direction: ltr; }
-
-        .type-txt { line-height: 1.8; text-align: center; font-size: 17px; min-height: 50px; color: #58a6ff; }
-
-        /* سجل الثقة */
-        .trust-log { border: 1px solid var(--primary); background: rgba(46, 160, 67, 0.05); padding: 20px; border-radius: 20px; text-align: right; line-height: 1.8; }
-
-        /* كروت Polaroid الذكريات */
-        .reasons-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 10px 0; }
-        .polaroid { background: white; padding: 10px 10px 20px 10px; transform: rotate(var(--r)); transition: 0.3s; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
-        .polaroid:hover { transform: rotate(0deg) scale(1.05); z-index: 5; }
-        .polaroid-img { height: 70px; background: #eee; display: flex; align-items: center; justify-content: center; font-size: 25px; margin-bottom: 8px; }
-        .polaroid-text { color: #333; font-size: 11px; font-weight: bold; text-align: center; }
-
-        .note-box { background: rgba(227, 179, 65, 0.08); border-right: 6px solid #e3b341; padding: 20px; border-radius: 15px; color: #e3b341; font-weight: bold; line-height: 1.8; }
-
-        /* تنسيق الأزرار (تعديل جذري للفصل) */
-        .btn { padding: 15px 25px; border-radius: 15px; font-weight: bold; cursor: pointer; border: none; font-size: 16px; width: 100%; max-width: 250px; text-align: center; display: inline-flex; align-items: center; justify-content: center; transition: 0.2s; }
-        
-        .btn-yes { background: #25D366; color: white; text-decoration: none; flex-direction: column; box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3); }
-        .btn-yes small { font-size: 9px; opacity: 0.8; margin-top: 4px; font-weight: normal; }
-
-        /* فريم زرار الزعل (المقلب) */
-        .no-frame {
-            min-height: 180px; /* طول مناسب للحركة جوه */
-            position: relative;
-            overflow: hidden; /* عشان الزرار ميتخطاش البرواز */
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        .btn-no {
-            background: #da3633;
-            color: white;
-            white-space: nowrap;
-            /* position: absolute; */ /* سنفعلها بالـ JS عند الضغط */
-            transition: 0.15s ease; /* حركة بسيطة ناعمة */
-        }
-        
-        #sabah-joke {
-            position: absolute; /* بالنسبة للفريم */
-            color: #ff4d6d;
-            font-weight: bold;
-            display: none;
-            background: white;
-            padding: 8px 12px;
-            border-radius: 50px;
-            font-size: 13px;
-            z-index: 10;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
-            border: 2px solid #ff4d6d;
-            white-space: nowrap;
+        /* شاشة القفل */
+        #lock-screen {
+            position: fixed; inset: 0; background: var(--primary-color);
+            color: #fff; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 9999;
+            transition: opacity 1s;
         }
 
-        @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
-        #player { position: absolute; top: -1000px; }
-        .heart { position: fixed; color: var(--accent); z-index: -1; animation: floatUp 4s linear infinite; pointer-events: none; }
-        @keyframes floatUp { to { transform: translateY(-110vh) rotate(360deg); opacity: 0; } }
+        .fingerprint-icon {
+            font-size: 80px; cursor: pointer; user-select: none;
+            transition: transform 0.2s; filter: drop-shadow(0 0 10px rgba(216, 27, 96, 0.5));
+        }
+        .fingerprint-icon:active { transform: scale(0.9); }
+
+        #progress-container {
+            width: 200px; height: 6px; background: rgba(255,255,255,0.1);
+            border-radius: 10px; margin-top: 25px; overflow: hidden;
+        }
+        #progress-bar { width: 0%; height: 100%; background: var(--accent-color); transition: width 0.1s linear; }
+
+        /* الحاوية الرئيسية */
+        .main-container {
+            position: relative; z-index: 10; width: 90%; max-width: 500px;
+            background: var(--glass-bg); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border); border-radius: 30px;
+            padding: 30px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .timer-section {
+            background: rgba(255,255,255,0.4); padding: 15px; border-radius: 20px;
+            margin-bottom: 25px; border: 1px solid rgba(255,255,255,0.5);
+        }
+
+        #timer { font-weight: bold; color: var(--primary-color); font-size: 1.1rem; margin-top: 5px; }
+
+        h1 { color: var(--primary-color); font-size: 1.8rem; margin: 0 0 10px 0; }
+
+        .happiness-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+
+        .card {
+            background: #fff; border: none; padding: 15px; border-radius: 15px;
+            color: var(--primary-color); font-weight: bold; font-size: 1.1rem;
+            cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .card:hover { transform: translateY(-5px) rotate(2deg); background: var(--accent-color); color: #fff; }
+
+        #secret-message {
+            margin-top: 25px; min-height: 40px; color: var(--accent-color);
+            font-weight: bold; font-size: 1.2rem; opacity: 0; transition: opacity 0.5s;
+        }
+
+        .btn-random {
+            margin-top: 20px; background: var(--primary-color); color: white;
+            border: none; padding: 10px 25px; border-radius: 50px;
+            cursor: pointer; font-size: 1rem; transition: 0.3s;
+        }
+        .btn-random:hover { background: #3e2723; transform: scale(1.05); }
+
+        /* تأثيرات بصرية */
+        .heart { position: fixed; pointer-events: none; z-index: 100; animation: floatUp 2s ease-out forwards; }
+        @keyframes floatUp { 0% { transform: translateY(0) scale(1); opacity: 1; } 100% { transform: translateY(-200px) scale(1.5); opacity: 0; } }
+
+        .star { position: absolute; background: white; border-radius: 50%; opacity: 0.5; animation: twinkle 3s infinite; }
+        @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+        .sparkle {
+            position: absolute; width: 6px; height: 6px; background: #fff;
+            border-radius: 50%; pointer-events: none; z-index: 999;
+            box-shadow: 0 0 10px #d81b60; animation: sparkleFade 0.8s linear forwards;
+        }
+        @keyframes sparkleFade { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(0.2); } }
     </style>
 </head>
 <body>
 
-    <canvas id="stars-canvas"></canvas>
-    <div id="progress-container"></div>
+<!-- مشغل يوتيوب المخفي لأغنية نانسي -->
+<iframe id="youtube-audio" src="https://www.youtube.com/embed/9hzFk2Yp1y4?enablejsapi=1&autoplay=0&loop=1&playlist=9hzFk2Yp1y4" allow="autoplay" style="display:none;"></iframe>
 
-    <div id="lock-screen">
-        <div class="login-box">
-            <h2 style="font-family: Arial;">🔒 Nancy's Private Gate</h2>
-            <p>عملت حاجة صغيرة عشان أعرف أصالحك بيها يا Nancy..<br><b>كلمة السر هي: sory</b></p>
-            <input type="password" id="pass-input" placeholder="اكتبي sory هنا...">
-            <button onclick="unlock()" class="login-btn">فتح المفاجأة ✨</button>
-        </div>
+<!-- شاشة القفل -->
+<div id="lock-screen">
+    <div class="fingerprint-icon" 
+         onmousedown="startHold()" onmouseup="endHold()" 
+         ontouchstart="startHold()" ontouchend="endHold()">☝️</div>
+    <p style="margin-top: 15px; letter-spacing: 1px;">اضغطي مطولاً للدخول</p>
+    <div id="progress-container"><div id="progress-bar"></div></div>
+</div>
+
+<!-- المحتوى الرئيسي -->
+<div class="main-container">
+    <h1>أنواع السعادة..</h1>
+    
+    <div class="timer-section">
+        <span style="font-size: 0.85rem; color: #777;">وقتنا سوا منذ 21 نوفمبر 2024:</span>
+        <div id="timer">تحميل العداد...</div>
     </div>
 
-    <div id="player"></div>
-
-    <div class="container" id="main-container">
-        
-        <div id="sec1" class="section">
-            <div class="card">
-                <h1>Hello, Nancy! ✅</h1>
-                <div class="timer-box">
-                    <p style="margin: 0 0 8px; font-size: 14px; color: #8b949e;">الوقت اللي ضاع مننا من إمبارح الساعة 8 مساءً:</p>
-                    <div id="timer">00:00:00:00</div>
-                </div>
-            </div>
-        </div>
-
-        <div id="sec2" class="section">
-            <div class="card" style="border: 1px dashed #58a6ff;">
-                <h4 style="color: #58a6ff; margin-top: 0; text-align: center;">🎵 ليه اخترت الأغنية دي؟</h4>
-                <p id="type-song" class="type-txt"></p>
-            </div>
-            <div class="reasons-grid">
-                <div class="polaroid" style="--r: -3deg" onclick="alert('فاكرة يوم 20 أبريل؟ أول خروجة لينا سوا وكل تفاصيلها اللي محفورة في قلبي ❤️')"><div class="polaroid-img">👫</div><div class="polaroid-text">20 أبريل</div></div>
-                <div class="polaroid" style="--r: 2deg" onclick="alert('ضحكتك اللي بتنسيني أي تعب في يومي، متهونش عليكي التكشيرة بقى 😊')"><div class="polaroid-img">😊</div><div class="polaroid-text">أحلى ضحكة</div></div>
-            </div>
-        </div>
-
-        <div id="sec3" class="section">
-            <div class="trust-log">
-                <h4 style="color: var(--primary); margin: 0 0 10px 0;">📜 سجل الصراحة والوضوح:</h4>
-                <p style="margin: 0;">يا Nancy، أنا عمري ما كذبت عليكي في حرف.. كنت دايمًا باجري عليكي أنتي أول واحدة أحكيلك كل حاجة بتحصلي، <b>الوحشة قبل الحلوة</b>.. وده كان أكبر دليل إني ماليش غيرك وإني متمسك بيكي. الشك ملوش مكان بينا.</p>
-            </div>
-        </div>
-
-        <div id="sec4" class="section">
-            <div class="note-box">
-                💡 ملحوظة غالية جداً: رغم إننا عارفين مين اللي غلط في حق مين المرة دي.. ورغم إن "السيستم" بيقول إنك أنتي اللي غلطانة، بس قلبي مسمحليش أكون قاسي عليكي، وقررت أنا اللي أبادر وأصالحك وأرضيكي.. لأن رضاكي عندي أهم من مين صح ومين غلط. ✨
-            </div>
-        </div>
-
-        <div id="sec5" class="section">
-            <div class="card" style="text-align: center;">
-                <p style="font-size: 20px; font-weight: bold; margin-bottom: 20px;">صافي يا لبن؟ ❤️</p>
-                <a href="https://wa.me/201141443841?text=أنا%20سمعت%20الأغنية%20وقريت%20الكلام%20يا%20Nancy..%20وصافية%20يا%20لبن%20يا%20أغلى%20حاجة%20عندي%20❤️" class="btn btn-yes">
-                    أيوة طبعاً ❤️
-                    <small>(الرد هيروح واتساب فوراً)</small>
-                </a>
-            </div>
-        </div>
-
-        <div id="sec6" class="section">
-            <div class="card no-frame" id="noFrame">
-                <div id="sabah-joke">مش هتعرفي تدوسي عليه يبنت صباح 😂</div>
-                <button class="btn btn-no" id="noBtn" onclick="moveNo()">لأ لسه زعلانة 😤</button>
-            </div>
-        </div>
+    <div class="happiness-grid">
+        <button class="card" onclick="reveal('أنتي الأصل والباقي تفاصيل 👑', event)">١. أنتي</button>
+        <button class="card" onclick="reveal('شمس بتنور قلبي حرفياً ☀️', event)">٢. ضحكتك</button>
+        <button class="card" onclick="reveal('بحر غريق مش عاوز أطلع منه 🌊', event)">٣. عيونك</button>
+        <button class="card" onclick="reveal('المزيكا اللي بترد الروح 🎵', event)">٤. صوتك</button>
+        <button class="card" onclick="reveal('أحلى جنون بيخلي اليوم جنة 🤪', event)">٥. جنونك</button>
+        <button class="card" onclick="reveal('أماني وطمأنينة قلبي 🕊️', event)">٦. رقتك</button>
     </div>
 
-    <script>
-        // إعداد النجوم في الخلفية
-        const canvas = document.getElementById('stars-canvas'); const ctx = canvas.getContext('2d'); let stars = [];
-        function initStars() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; for(let i=0; i<120; i++) stars.push({x: Math.random()*canvas.width, y: Math.random()*canvas.height, size: Math.random()*2, speed: Math.random()*0.5}); }
-        function drawStars() { ctx.clearRect(0,0,canvas.width, canvas.height); ctx.fillStyle = "white"; stars.forEach(s => { ctx.beginPath(); ctx.arc(s.x, s.y, s.size, 0, Math.PI*2); ctx.fill(); s.y -= s.speed; if(s.y<0) s.y=canvas.height; }); requestAnimationFrame(drawStars); }
+    <div id="secret-message"></div>
 
-        // يوتيوب
-        var tag = document.createElement('script'); tag.src = "https://www.youtube.com/iframe_api";
-        var firstScriptTag = document.getElementsByTagName('script')[0]; firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-        var player; function onYouTubeIframeAPIReady() { player = new YT.Player('player', { height: '0', width: '0', videoId: 'NYntUyksG5E', events: { 'onReady': () => {} } }); }
+    <button class="btn-random" onclick="getRandomQuote()">💌 رسالة ليكي</button>
+</div>
 
-        // عداد الوقت والرضا
-        window.onscroll = function() { let h = document.documentElement.scrollHeight - document.documentElement.clientHeight; document.getElementById("progress-container").style.width = (window.scrollY / h) * 100 + "%"; };
+<!-- نجوم الخلفية -->
+<div id="stars-container"></div>
 
-        function updateTimer() {
-            const diff = new Date() - new Date("2026-05-06T20:00:00");
-            const d = Math.floor(diff/86400000), h = Math.floor(diff%86400000/3600000), m = Math.floor(diff%3600000/60000), s = Math.floor(diff%60000/1000);
-            document.getElementById('timer').innerText = `${d}d : ${h}h : ${m}m : ${s}s`;
-        }
+<script>
+    // 1. إعداد نجوم الخلفية
+    const starsContainer = document.getElementById('stars-container');
+    for (let i = 0; i < 50; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        const size = Math.random() * 3 + 'px';
+        star.style.width = size; star.style.height = size;
+        star.style.left = Math.random() * 100 + '%'; star.style.top = Math.random() * 100 + '%';
+        star.style.animationDelay = Math.random() * 3 + 's';
+        starsContainer.appendChild(star);
+    }
 
-        function typeEffect(el, text, speed, cb) {
-            let i = 0; function type() { if(i < text.length) { el.innerHTML += text.charAt(i); i++; setTimeout(type, speed); } else if(cb) cb(); } type();
-        }
+    // 2. تأثير الماوس السحري (البريق)
+    document.addEventListener('mousemove', function(e) {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+        sparkle.style.left = e.pageX + 'px';
+        sparkle.style.top = e.pageY + 'px';
+        document.body.appendChild(sparkle);
+        setTimeout(() => sparkle.remove(), 800);
+    });
 
-        function unlock() {
-            if(document.getElementById('pass-input').value === 'sory') {
+    // 3. عداد الوقت (من 21 نوفمبر 2024)
+    const startDate = new Date("2024-11-21T00:00:00");
+    function updateTimer() {
+        const diff = new Date() - startDate;
+        const days = Math.floor(diff / 86400000);
+        const hours = Math.floor((diff / 3600000) % 24);
+        const mins = Math.floor((diff / 60000) % 60);
+        const secs = Math.floor((diff / 1000) % 60);
+        document.getElementById('timer').innerHTML = `${days} يوم و ${hours} ساعة و ${mins} دقيقة و ${secs} ثانية`;
+    }
+    setInterval(updateTimer, 1000);
+
+    // 4. منطق شاشة القفل + تشغيل الأغنية من يوتيوب
+    let holdTimer, progress = 0;
+    
+    function startHold() {
+        holdTimer = setInterval(() => {
+            progress += 2;
+            document.getElementById('progress-bar').style.width = progress + '%';
+            if (progress >= 100) {
+                clearInterval(holdTimer);
                 document.getElementById('lock-screen').style.opacity = '0';
-                setTimeout(startSequence, 1000);
-            } else { alert("كلمة السر sory يا Nancy!"); }
+                setTimeout(() => document.getElementById('lock-screen').style.display = 'none', 1000);
+                
+                // تشغيل الأغنية
+                const ytPlayer = document.getElementById('youtube-audio');
+                if (ytPlayer && ytPlayer.contentWindow) {
+                    ytPlayer.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+                }
+            }
+        }, 20);
+    }
+    function endHold() {
+        clearInterval(holdTimer);
+        if (progress < 100) { progress = 0; document.getElementById('progress-bar').style.width = '0%'; }
+    }
+
+    // 5. إظهار الرسائل وتأثير القلوب
+    function reveal(text, event) {
+        const msg = document.getElementById('secret-message');
+        msg.innerText = text; msg.style.opacity = '1';
+
+        for (let i = 0; i < 8; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'heart'; heart.innerHTML = '❤️';
+            let x = event.clientX || (event.touches ? event.touches[0].clientX : window.innerWidth/2);
+            let y = event.clientY || (event.touches ? event.touches[0].clientY : window.innerHeight/2);
+            heart.style.left = x + (Math.random() * 50 - 25) + 'px';
+            heart.style.top = y + 'px';
+            heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 2000);
         }
+    }
 
-        async function startSequence() {
-            document.getElementById('lock-screen').style.display = 'none';
-            document.getElementById('main-container').style.display = 'flex';
-            player.playVideo(); setInterval(updateTimer, 1000); initStars(); drawStars(); startHearts();
-            
-            show('sec1'); await sleep(2000);
-            show('sec2'); 
-            typeEffect(document.getElementById('type-song'), "عشان مهما زعلنا، الأغنية دي هي الحقيقة اللي في قلبي.. إنك مهما عملتي، هتفضلي في نظري 'زي ما أنتي' أغلى وأحلى Nancy في الدنيا.", 50, async () => {
-                await sleep(1000); show('sec3'); 
-                await sleep(3000); show('sec4'); 
-                await sleep(3000); show('sec5'); // اتصلحت
-                await sleep(1500); show('sec6'); // الزعل (المقلب)
-            });
-        }
+    // 6. رسائل عشوائية
+    const quotes = [
+        "كل يوم بيمر وأنتي معايا هو عيد.",
+        "ضحكتك هي السبب اللي بيخليني أحب الحياة.",
+        "أنتي مش بس في بالي، أنتي بالي كله.",
+        "ممتن جداً لليوم اللي جمعني بيكي (21 نوفمبر).",
+        "لو سألوني عن السعادة، هقول اسمك."
+    ];
+    function getRandomQuote() {
+        const quote = quotes[Math.floor(Math.random() * quotes.length)];
+        reveal(quote, { clientX: window.innerWidth / 2, clientY: window.innerHeight / 2 });
+    }
+</script>
 
-        function show(id) { document.getElementById(id).style.display = 'flex'; }
-        function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
-
-        const jokes = ["مش هتعرفي تدوسي عليه يبنت صباح 😂", "الشك مسيطر أوي ليه كدة؟ 😂", "والله ما أنتي دايسة يا نانسي 😂", "صالحيني بقى يا بنتي خلاص 😂", "الزرار ده زينة بس النهاردة 😂"];
-        
-        // التعديل: الحركة عند الضغط وبداخل الفريم وبشكل بسيط
-        function moveNo() {
-            const btn = document.getElementById('noBtn');
-            const joke = document.getElementById('sabah-joke');
-            const frame = document.getElementById('noFrame');
-
-            // تفعيل التموضع المطلق داخل الفريم عند أول ضغطة
-            btn.style.position = 'absolute';
-
-            // حساب أبعاد الفريم والزرار
-            const frameW = frame.clientWidth;
-            const frameH = frame.clientHeight;
-            const btnW = btn.offsetWidth;
-            const btnH = btn.offsetHeight;
-
-            // حساب أقصى مسافة للحركة جوه الفريم (مع ترك هامش بسيط)
-            const maxW = frameW - btnW - 20;
-            const maxH = frameH - btnH - 20;
-
-            // توليد إحداثيات عشوائية جديدة جوه الفريم
-            const x = Math.max(10, Math.random() * maxW);
-            const y = Math.max(10, Math.random() * maxH);
-
-            // تطبيق الحركة البسيطة
-            btn.style.left = x + 'px';
-            btn.style.top = y + 'px';
-
-            // إظهار نكتة بنت صباح وتحديد مكانها فوق الزرار
-            joke.style.display = 'block';
-            joke.innerHTML = jokes[Math.floor(Math.random()*jokes.length)];
-            
-            // تحديد مكان النكتة بالنسبة للزرار الجديد جوه الفريم
-            joke.style.left = x + 'px';
-            joke.style.top = (y - 40) + 'px'; // تظهر فوق الزرار بـ 40 بكسل
-        }
-
-        function startHearts() { setInterval(() => {
-            const h = document.createElement('div'); h.classList.add('heart'); h.innerHTML = Math.random()>0.3?'❤️':'🌸';
-            h.style.left = Math.random()*100+'vw'; h.style.bottom = '-20px'; h.style.fontSize = (Math.random()*20+15)+'px';
-            document.body.appendChild(h); setTimeout(() => h.remove(), 4000);
-        }, 300); }
-    </script>
 </body>
 </html>
