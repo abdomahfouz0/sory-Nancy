@@ -2,12 +2,13 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>إلى نانسي.. أغلى ما أملك</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Amiri:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
     <style>
         :root {
             --bg-cream: #FFF9F1;
@@ -19,51 +20,96 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            background-color: #f0ebe3; display: flex; justify-content: center; align-items: center;
-            min-height: 100vh; overflow: hidden; font-family: 'Cairo', sans-serif;
+            background-color: #f0ebe3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden; /* لمنع السكرول الجانبي */
+            font-family: 'Cairo', sans-serif;
+            position: relative;
         }
 
+        /* حاوية العرض الرئيسية */
         .slide-container {
-            width: 100%; max-width: 1280px; height: 100vh; max-height: 720px;
-            background-color: var(--bg-cream); border-radius: 20px; box-shadow: 0 25px 50px rgba(0,0,0,0.15);
-            position: relative; display: none; overflow: hidden; border: 8px solid white;
+            width: 95%;
+            max-width: 1280px;
+            height: 95vh;
+            max-height: 720px;
+            background-color: var(--bg-cream);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            position: absolute; /* مهم جداً عشان الشاشات متجيش جنب بعض */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+            flex-direction: column;
+            overflow-y: auto; /* يسمح بالسكرول الداخلي لو الكلام كتير */
+            overflow-x: hidden;
+            border: 8px solid white;
         }
 
-        .slide-container.active { display: flex; flex-direction: column; animation: fadeIn 0.8s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+        .slide-container.active { 
+            display: flex; 
+            animation: fadeIn 0.6s ease-in-out; 
+        }
 
+        @keyframes fadeIn { from { opacity: 0; transform: translate(-50%, -48%); } to { opacity: 1; transform: translate(-50%, -50%); } }
+
+        /* الديكور والخلفيات */
         .bg-decoration { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 0; pointer-events: none; }
         .circle-decor { position: absolute; border-radius: 50%; background: radial-gradient(circle, rgba(216, 27, 96, 0.05) 0%, transparent 70%); }
 
-        #slide-lock { display: flex; background: var(--deep-brown); color: white; justify-content: center; align-items: center; flex-direction: column; }
-        .fingerprint-box { border: 2px dashed var(--gold-accent); padding: 40px; border-radius: 50%; cursor: pointer; transition: 0.3s; }
-        .fingerprint-box i { font-size: 80px; color: var(--gold-accent); }
-        .progress-line { width: 200px; height: 4px; background: rgba(255,255,255,0.1); margin-top: 20px; position: relative; overflow: hidden; }
+        /* شاشة القفل */
+        #slide-lock { background: var(--deep-brown); color: white; justify-content: center; align-items: center; text-align: center; }
+        .fingerprint-box { border: 2px dashed var(--gold-accent); padding: 30px; border-radius: 50%; cursor: pointer; transition: 0.3s; margin-top: 20px; }
+        .fingerprint-box i { font-size: 70px; color: var(--gold-accent); }
+        .progress-line { width: 80%; max-width: 200px; height: 5px; background: rgba(255,255,255,0.1); margin-top: 30px; position: relative; border-radius: 10px; overflow: hidden; }
         #progress-fill { width: 0%; height: 100%; background: var(--primary-rose); transition: width 0.1s; }
 
-        h1, h2 { color: var(--deep-brown); }
-        .slide-title { font-size: 55px; margin-bottom: 20px; font-weight: 700; text-align: center; width: 100%; }
-        .content-area { flex-grow: 1; width: 100%; display: flex; justify-content: center; align-items: center; padding: 40px; z-index: 10; }
-        p, li { font-family: 'Amiri', serif; font-size: 24px; color: #444; line-height: 1.6; }
+        /* النصوص والتنسيقات */
+        .content-area { flex-grow: 1; width: 100%; display: flex; justify-content: center; align-items: center; padding: 20px; z-index: 10; flex-direction: column; text-align: center; }
+        h1, h2, h3 { color: var(--deep-brown); }
+        .slide-title { font-size: 40px; margin: 20px 0; font-weight: 700; width: 100%; text-align: center; }
+        p, li { font-family: 'Amiri', serif; font-size: 22px; color: #444; line-height: 1.6; }
 
-        .nav-buttons { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 20px; z-index: 100; }
-        .nav-btn { background: var(--primary-rose); color: white; border: none; padding: 12px 25px; border-radius: 30px; cursor: pointer; font-weight: bold; transition: 0.3s; font-family: 'Cairo', sans-serif; font-size: 18px; }
+        /* أزرار التنقل */
+        .nav-buttons { padding: 20px; display: flex; justify-content: center; gap: 15px; width: 100%; background: var(--bg-cream); z-index: 100; }
+        .nav-btn { background: var(--primary-rose); color: white; border: none; padding: 10px 25px; border-radius: 30px; cursor: pointer; font-weight: bold; transition: 0.3s; font-family: 'Cairo', sans-serif; font-size: 16px; box-shadow: 0 4px 10px rgba(216, 27, 96, 0.3); }
         .nav-btn:hover { background: var(--deep-brown); transform: translateY(-3px); }
 
-        .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; width: 100%; align-items: center; }
-        .image-frame { width: 100%; height: 450px; border-radius: 20px; overflow: hidden; border: 10px solid white; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        /* تخطيطات متعددة - الأساس للموبايل */
+        .two-column { display: flex; flex-direction: column; gap: 20px; width: 100%; align-items: center; }
+        .image-frame { width: 100%; max-width: 400px; height: 250px; border-radius: 15px; overflow: hidden; border: 5px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         .image-frame img { width: 100%; height: 100%; object-fit: cover; }
 
-        .tile-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; width: 100%; }
-        .tile { background: white; padding: 30px; border-radius: 20px; border-bottom: 5px solid var(--primary-rose); text-align: center; }
-        .tile i { font-size: 40px; color: var(--primary-rose); margin-bottom: 15px; }
+        .tile-container { display: flex; flex-direction: column; gap: 15px; width: 100%; }
+        .tile { background: white; padding: 20px; border-radius: 15px; border-bottom: 4px solid var(--primary-rose); text-align: center; width: 100%; }
+        .tile i { font-size: 35px; color: var(--primary-rose); margin-bottom: 10px; }
 
-        .highlight-number { font-size: 120px; font-weight: 700; color: var(--primary-rose); font-family: 'Poppins'; }
-        .timer-label { font-size: 32px; color: var(--deep-brown); margin-top: -20px; }
+        .highlight-number { font-size: 70px; font-weight: 700; color: var(--primary-rose); font-family: 'Poppins'; line-height: 1; }
+        .timer-label { font-size: 20px; color: var(--deep-brown); margin-top: 10px; }
+
+        /* تعديلات شاشات الكمبيوتر (إن وُجدت) */
+        @media (min-width: 768px) {
+            .slide-title { font-size: 55px; }
+            p, li { font-size: 26px; }
+            .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+            .tile-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+            .image-frame { height: 400px; border: 10px solid white; }
+            .highlight-number { font-size: 120px; }
+            .timer-label { font-size: 32px; }
+        }
 
         #music-player { display: none; }
-        .sparkle { position: absolute; width: 8px; height: 8px; background: var(--gold-accent); border-radius: 50%; pointer-events: none; z-index: 999; animation: sparkleFade 1s linear forwards; }
-        @keyframes sparkleFade { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(0); } }
+        
+        /* تأثيرات الإضافات الجديدة */
+        .envelope { font-size: 100px; color: var(--primary-rose); cursor: pointer; transition: 0.3s; margin: 30px 0; animation: shake 2s infinite; }
+        @keyframes shake { 0%, 100% {transform: rotate(0deg);} 25% {transform: rotate(-5deg);} 75% {transform: rotate(5deg);} }
+        .secret-msg { display: none; background: white; padding: 20px; border-radius: 15px; border: 2px dashed var(--primary-rose); margin-top: 20px; font-weight: bold; color: var(--deep-brown); }
+
     </style>
 </head>
 <body>
@@ -71,26 +117,29 @@
 <iframe id="music-player" src="https://www.youtube.com/embed/9hzFk2Yp1y4?enablejsapi=1&autoplay=0&loop=1&playlist=9hzFk2Yp1y4" allow="autoplay"></iframe>
 
 <div class="slide-container active" id="slide-lock">
+    <div style="margin-top: auto;">
+        <h2 style="color: #fff; font-size: 28px;">مملكة نانسي</h2>
+        <p style="color: #ddd; font-size: 16px; margin-top: 10px;">اضغطي مطولاً على البصمة للدخول</p>
+    </div>
     <div class="fingerprint-box" onmousedown="startLock()" onmouseup="endLock()" ontouchstart="startLock()" ontouchend="endLock()">
         <i class="fa-solid fa-fingerprint"></i>
     </div>
-    <h2 style="margin-top: 30px; color: #fff;">اضغطي مطولاً لفتح المفاجأة</h2>
     <div class="progress-line"><div id="progress-fill"></div></div>
+    <div style="margin-top: auto; padding-bottom: 20px;"></div>
 </div>
 
 <div class="slide-container" id="slide1">
-    <div class="bg-decoration"><div class="circle-decor" style="width: 400px; height: 400px; top: -100px; right: -100px;"></div></div>
-    <div class="content-area" style="flex-direction: column;">
-        <h1 class="slide-title">ألف سلامة على قلبك يا نانسي 🌹</h1>
-        <p style="text-align: center; max-width: 800px;">دراعك المكسور ده شايل قطعة من قلبي.. الوجع ده هيعدي وهتكوني أقوى وأجمل واحدة في الدنيا زي ما أنتي دايماً.</p>
+    <div class="content-area">
+        <h1 class="slide-title">ألف سلامة على قلبك 🌹</h1>
+        <p>دراعك المكسور ده شايل قطعة من قلبي.. الوجع ده هيعدي وهتكوني أقوى وأجمل واحدة في الدنيا زي ما أنتي دايماً.</p>
     </div>
     <div class="nav-buttons"><button class="nav-btn" onclick="nextSlide(2)">ابدأ الرحلة <i class="fa-solid fa-arrow-left"></i></button></div>
 </div>
 
 <div class="slide-container" id="slide2">
-    <div class="content-area" style="text-align: center; flex-direction: column;">
-        <div style="border-top: 4px solid var(--primary-rose); border-bottom: 4px solid var(--primary-rose); padding: 40px;">
-            <h2 style="font-size: 60px;">لأنكِ السعادة بكل أنواعها..</h2>
+    <div class="content-area">
+        <div style="border-top: 3px solid var(--primary-rose); border-bottom: 3px solid var(--primary-rose); padding: 30px 10px;">
+            <h2 style="font-size: 35px; margin-bottom: 15px;">لأنكِ السعادة بكل أنواعها..</h2>
             <p style="font-style: italic;">"انواع السعادة السبعة.. وانتي السابعة"</p>
         </div>
     </div>
@@ -98,40 +147,38 @@
 </div>
 
 <div class="slide-container" id="slide3">
-    <h2 class="slide-title" style="margin-top: 30px;">١. أنتي</h2>
     <div class="content-area">
+        <h2 class="slide-title">١. أنتي</h2>
         <div class="two-column">
             <div>
-                <h3 style="font-size: 30px; color: var(--primary-rose); margin-bottom: 15px;">الأصل والباقي تفاصيل</h3>
-                <p>وجودك في حياتي هو اللي بيخلي للأيام طعم.. أنتي مش بس حبيبتي، أنتي عالمي الخاص اللي بهرب فيه من كل الدنيا.</p>
+                <h3 style="color: var(--primary-rose); margin-bottom: 10px;">الأصل والباقي تفاصيل</h3>
+                <p>وجودك في حياتي هو اللي بيخلي للأيام طعم.. أنتي مش بس حبيبتي، أنتي عالمي الخاص.</p>
             </div>
-            <div class="image-frame"><img src="https://images.unsplash.com/photo-1496062031456-07b8f162a322?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Rose"></div>
+            <div class="image-frame"><img src="https://images.unsplash.com/photo-1496062031456-07b8f162a322?auto=format&fit=crop&w=600&q=80" alt="Rose"></div>
         </div>
     </div>
     <div class="nav-buttons"><button class="nav-btn" onclick="nextSlide(4)">التالي</button></div>
 </div>
 
 <div class="slide-container" id="slide4">
-    <h2 class="slide-title" style="margin-top: 30px;">٢ & ٣. ضحكتك وعيونك</h2>
     <div class="content-area">
+        <h2 class="slide-title">٢ & ٣. ضحكتك وعيونك</h2>
         <div class="tile-container">
-            <div class="tile"><i class="fa-solid fa-sun"></i><h3 style="font-size: 28px;">ضحكتك</h3><p>شمس بتنور قلبي حرفياً.</p></div>
-            <div class="tile"><i class="fa-solid fa-water"></i><h3 style="font-size: 28px;">عيونك</h3><p>بحر غريق مش عاوز أطلع منه.</p></div>
+            <div class="tile"><i class="fa-solid fa-sun"></i><h3>ضحكتك</h3><p>شمس بتنور قلبي حرفياً.</p></div>
+            <div class="tile"><i class="fa-solid fa-water"></i><h3>عيونك</h3><p>بحر غريق مش عاوز أطلع منه.</p></div>
         </div>
     </div>
     <div class="nav-buttons"><button class="nav-btn" onclick="nextSlide(5)">التالي</button></div>
 </div>
 
 <div class="slide-container" id="slide5">
-    <h2 class="slide-title" style="margin-top: 30px;">٤. صوتك</h2>
     <div class="content-area">
+        <h2 class="slide-title">٤. صوتك</h2>
         <div class="two-column">
-            <div class="image-frame"><img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Music"></div>
+            <div class="image-frame"><img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80" alt="Music"></div>
             <div>
-                <p>صوتك هو المزيكا اللي بترد الروح.. نبرة صوتك فيها حنية بتخليني أحس إن الدنيا لسه بخير.</p>
-                <div style="margin-top: 20px; color: var(--primary-rose); font-size: 22px; font-weight: bold;">
-                    <i class="fa-solid fa-music fa-beat-fast"></i> اسمعي الأغنية اللي شغالة دلوقتي..
-                </div>
+                <p>صوتك هو المزيكا اللي بترد الروح.. نبرة صوتك بتخليني أحس إن الدنيا لسه بخير.</p>
+                <p style="color: var(--primary-rose); font-weight: bold; margin-top: 15px;"><i class="fa-solid fa-headphones"></i> اسمعي الأغنية اللي شغالة..</p>
             </div>
         </div>
     </div>
@@ -139,13 +186,12 @@
 </div>
 
 <div class="slide-container" id="slide6">
-    <h2 class="slide-title" style="margin-top: 30px;">٥ & ٦. جنونك ورقتك</h2>
     <div class="content-area">
+        <h2 class="slide-title">٥ & ٦. جنونك ورقتك</h2>
         <div class="two-column">
-             <div class="image-frame" style="height: 350px;"><img src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Feathers"></div>
             <div>
-                <div style="margin-bottom: 30px;"><h3 style="color: var(--primary-rose); font-size: 28px;">جنونك</h3><p>أحلى جنون بيخلي اليوم جنة.</p></div>
-                <div><h3 style="color: var(--primary-rose); font-size: 28px;">رقتك</h3><p>أماني وطمأنينة قلبي.</p></div>
+                <h3 style="color: var(--primary-rose);">جنونك</h3><p style="margin-bottom: 20px;">أحلى جنون بيخلي اليوم جنة.</p>
+                <h3 style="color: var(--primary-rose);">رقتك</h3><p>أماني وطمأنينة قلبي.</p>
             </div>
         </div>
     </div>
@@ -153,10 +199,10 @@
 </div>
 
 <div class="slide-container" id="slide7">
-    <h2 class="slide-title" style="margin-top: 30px;">قصتنا بدأت هنا..</h2>
-    <div class="content-area" style="flex-direction: column;">
+    <div class="content-area">
+        <h2 class="slide-title">قصتنا بدأت هنا..</h2>
         <div id="timer-display" class="highlight-number">0</div>
-        <div class="timer-label">يوم من السعادة (منذ ٢١ نوفمبر ٢٠٢٤)</div>
+        <div class="timer-label">يوم من السعادة<br>(منذ ٢١ نوفمبر ٢٠٢٤)</div>
     </div>
     <div class="nav-buttons"><button class="nav-btn" onclick="nextSlide(8)">التالي</button></div>
 </div>
@@ -164,71 +210,66 @@
 <div class="slide-container" id="slide8">
     <div class="content-area">
         <div class="two-column">
-            <div>
-                <blockquote style="font-size: 40px; border-right: 10px solid var(--primary-rose); padding-right: 20px; color: var(--deep-brown); font-weight: bold;">
-                    "الجمال الحقيقي مابيتكسرش.."
-                </blockquote>
-                <p style="margin-top: 30px;">حتى ودراعك مكسور، أنتي أجمل واحدة في الكون كله في عيوني.</p>
+            <blockquote style="font-size: 26px; border-right: 5px solid var(--primary-rose); padding-right: 15px; color: var(--deep-brown); font-weight: bold; text-align: right;">
+                "الجمال الحقيقي مابيتكسرش.."
+            </blockquote>
+            <div class="image-frame" style="height: 350px;">
+                <img src="1000248394.jpg" alt="Nancy" onerror="this.src='https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=600&q=80';">
             </div>
-            <div class="image-frame"><img src="https://files.oaiusercontent.com/file-6fCHWpE9x0OAtxZ93gWfF3P1?se=2024-10-18T10%3A53%3A40Z&sp=r&sv=24.8.6&sr=b&rscc=max-age%3D604800%2C%20private%2C%20immutable&rscd=attachment%3B%20filename%3D12361730-848D-4130-9E11-20921B668D8E.jpeg&sig=Y8E85G%2BvKCHx60X/S02%2Beu5%2BX86z/6j9UvLh0GZREwI%3D" alt="Nancy"></div>
+            <p>حتى وأنتي تعبانة ودراعك مكسور، أنتي أجمل واحدة في الكون كله في عيوني.</p>
         </div>
     </div>
     <div class="nav-buttons"><button class="nav-btn" onclick="nextSlide(9)">التالي</button></div>
 </div>
 
 <div class="slide-container" id="slide9">
-    <h2 class="slide-title" style="margin-top: 30px;">روشتة الشفاء السريع 💊</h2>
     <div class="content-area">
-        <table style="width: 100%; border-collapse: collapse; background: white; border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.05);">
-            <thead style="background: var(--primary-rose); color: white;">
-                <tr><th style="padding: 25px; font-size: 28px;">الجرعة</th><th style="padding: 25px; font-size: 28px;">التأثير المتوقع</th></tr>
-            </thead>
-            <tbody style="text-align: center; font-size: 24px;">
-                <tr style="border-bottom: 1px solid #eee;"><td style="padding: 20px;">ضحكة من قلبك</td><td style="padding: 20px;">شفاء فوري لكل الوجع</td></tr>
-                <tr><td style="padding: 20px;">دلع نانسي</td><td style="padding: 20px;">عودة الروح للمكان</td></tr>
-            </tbody>
-        </table>
+        <h2 class="slide-title">طاقة شفاء 🪄</h2>
+        <p>حطي إيدك السليمة هنا عشان نبعت طاقة تخفف وجع دراعك المكسور..</p>
+        <div id="heal-btn" style="font-size: 90px; margin: 40px 0; cursor: pointer; color: var(--primary-rose); transition: 0.3s;" onmousedown="healMagic()" ontouchstart="healMagic()">
+            <i class="fa-solid fa-hand-holding-heart"></i>
+        </div>
+        <p id="heal-msg" class="secret-msg">يا رب دراع نانسي يخف بسرعة وترجع تنور الدنيا! ✨❤️</p>
     </div>
     <div class="nav-buttons"><button class="nav-btn" onclick="nextSlide(10)">التالي</button></div>
 </div>
 
 <div class="slide-container" id="slide10">
-    <h2 class="slide-title" style="margin-top: 30px;">نمو سعادتي بيكي 📈</h2>
-    <div class="content-area" style="flex-direction: column;">
-        <svg viewBox="0 0 1000 400" style="width: 100%; height: 300px;">
-            <defs>
-                <linearGradient id="grad" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" style="stop-color:var(--primary-rose);stop-opacity:0.6" />
-                    <stop offset="100%" style="stop-color:var(--primary-rose);stop-opacity:0" />
-                </linearGradient>
-            </defs>
-            <path d="M0,400 Q250,300 500,200 T1000,50 L1000,400 L0,400 Z" fill="url(#grad)" />
-            <path d="M0,400 Q250,300 500,200 T1000,50" fill="none" stroke="var(--primary-rose)" stroke-width="8" />
-            <circle cx="1000" cy="50" r="12" fill="var(--primary-rose)" />
-            <text x="10" y="380" font-family="Cairo" font-size="20">نوفمبر ٢٠٢٤</text>
-            <text x="830" y="40" font-family="Cairo" font-size="24" font-weight="bold">ما لانهاية من الحب</text>
-        </svg>
+    <div class="content-area">
+        <h2 class="slide-title">روشتة الشفاء 💊</h2>
+        <div style="width: 100%; overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; background: white; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); min-width: 280px;">
+                <thead style="background: var(--primary-rose); color: white;">
+                    <tr><th style="padding: 15px;">الجرعة</th><th style="padding: 15px;">التأثير المتوقع</th></tr>
+                </thead>
+                <tbody style="font-size: 18px;">
+                    <tr style="border-bottom: 1px solid #eee;"><td style="padding: 15px;">ضحكة من قلبك</td><td style="padding: 15px;">شفاء فوري للوجع</td></tr>
+                    <tr><td style="padding: 15px;">دلع نانسي</td><td style="padding: 15px;">عودة الروح للمكان</td></tr>
+                </tbody>
+            </table>
+        </div>
     </div>
     <div class="nav-buttons"><button class="nav-btn" onclick="nextSlide(11)">التالي</button></div>
 </div>
 
 <div class="slide-container" id="slide11">
-    <div class="content-area" style="flex-direction: column; text-align: center;">
-        <h1 style="font-size: 80px; color: var(--primary-rose); margin-bottom: 10px;">سؤال واحد؟</h1>
-        <p style="font-size: 40px; margin-top: 20px; color: var(--deep-brown); font-weight: bold;">بحبك قد إيه يا نانسي؟</p>
-        <div style="margin-top: 40px; font-size: 50px; background: white; padding: 30px; border-radius: 20px; border: 2px dashed var(--primary-rose); color: var(--primary-rose); font-weight: bold;">
-            الحب = (نانسي) <sup>∞</sup>
+    <div class="content-area">
+        <h2 class="slide-title">رسالة خاصة 💌</h2>
+        <p>اضغطي على الظرف عشان تفتحيه</p>
+        <div class="envelope" onclick="openEnvelope(this)"><i class="fa-solid fa-envelope"></i></div>
+        <div id="envelope-msg" class="secret-msg" style="font-size: 22px;">
+            مهما حصل ومهما تعبتي، أنا دايماً ضهرك وسندك.. بحبك يا أغلى نانسي.
         </div>
     </div>
-    <div class="nav-buttons"><button class="nav-btn" onclick="nextSlide(12)">الختام</button></div>
+    <div class="nav-buttons"><button class="nav-btn" onclick="nextSlide(12)">النهاية</button></div>
 </div>
 
 <div class="slide-container" id="slide12">
-    <div class="content-area" style="flex-direction: column; text-align: center;">
-        <h1 style="font-size: 70px; color: var(--deep-brown); margin-bottom: 40px;">وأخيراً..</h1>
-        <button id="finale-btn" style="background: var(--primary-rose); color: white; border: none; padding: 20px 60px; font-size: 35px; border-radius: 50px; cursor: pointer; font-family: 'Cairo'; font-weight: bold; box-shadow: 0 10px 20px rgba(216, 27, 96, 0.4); transition: 0.3s;" onclick="triggerFinale()">اضغطي هنا ❤️</button>
-        <div id="finale-msg" style="display: none; margin-top: 50px; font-size: 45px; color: var(--primary-rose); font-weight: bold; line-height: 1.5;">
-            بحبك يا أجمل نانسي في الدنيا!<br>ربنا يشفيكي ويعافيكي ليا.
+    <div class="content-area">
+        <h1 style="font-size: 45px; margin-bottom: 30px;">وأخيراً..</h1>
+        <button id="finale-btn" style="background: var(--primary-rose); color: white; border: none; padding: 15px 40px; font-size: 24px; border-radius: 50px; cursor: pointer; font-family: 'Cairo'; font-weight: bold; box-shadow: 0 8px 20px rgba(216, 27, 96, 0.4);" onclick="triggerFinale()">اضغطي هنا ❤️</button>
+        <div id="finale-msg" style="display: none; margin-top: 30px; font-size: 30px; color: var(--primary-rose); font-weight: bold; line-height: 1.5;">
+            بحبك يا نانسي!<br>ربنا يشفيكي ويعافيكي ليا.
         </div>
     </div>
 </div>
@@ -241,9 +282,10 @@
         slides[currentSlide].classList.remove('active');
         currentSlide = index;
         slides[currentSlide].classList.add('active');
-        if(index === 7) startTimer();
+        if(index === 7) startTimer(); // السلايد رقم 7 هو العداد دلوقتي
     }
 
+    // قفل البصمة
     let lockTimer, progress = 0;
     function startLock() {
         lockTimer = setInterval(() => {
@@ -257,10 +299,11 @@
                 }
                 nextSlide(1);
             }
-        }, 50);
+        }, 40);
     }
     function endLock() { clearInterval(lockTimer); progress = 0; document.getElementById('progress-fill').style.width = '0%'; }
 
+    // العداد
     function startTimer() {
         const start = new Date("2024-11-21");
         const update = () => {
@@ -270,38 +313,61 @@
         update(); setInterval(update, 86400000);
     }
 
-    document.addEventListener('mousemove', (e) => {
-        const sparkle = document.createElement('div');
-        sparkle.className = 'sparkle';
-        sparkle.style.left = e.pageX + 'px'; sparkle.style.top = e.pageY + 'px';
-        document.body.appendChild(sparkle);
-        setTimeout(() => sparkle.remove(), 1000);
-    });
+    // سحر الشفاء
+    function healMagic() {
+        const btn = document.getElementById('heal-btn');
+        btn.style.transform = 'scale(1.3)';
+        btn.style.color = '#D4AF37'; // يتحول لدهبي
+        document.getElementById('heal-msg').style.display = 'block';
+        
+        // خروج قلوب صغيرة
+        for(let i=0; i<5; i++){
+            setTimeout(() => {
+                const heart = document.createElement('div');
+                heart.innerHTML = '✨';
+                heart.style.position = 'absolute';
+                heart.style.left = (btn.offsetLeft + Math.random() * 50) + 'px';
+                heart.style.top = (btn.offsetTop - 20) + 'px';
+                heart.style.fontSize = '30px';
+                heart.style.transition = 'all 1s ease-out';
+                btn.parentElement.appendChild(heart);
+                setTimeout(() => { heart.style.top = (btn.offsetTop - 150) + 'px'; heart.style.opacity = '0'; }, 50);
+                setTimeout(() => heart.remove(), 1000);
+            }, i * 200);
+        }
+    }
 
-    // كود المفاجأة الأخيرة (انفجار القلوب)
+    // فتح الظرف
+    function openEnvelope(el) {
+        el.style.animation = 'none';
+        el.innerHTML = '<i class="fa-solid fa-envelope-open-text"></i>';
+        document.getElementById('envelope-msg').style.display = 'block';
+    }
+
+    // انفجار القلوب الأخير
     function triggerFinale() {
         document.getElementById('finale-btn').style.display = 'none';
         document.getElementById('finale-msg').style.display = 'block';
         
-        for(let i=0; i<60; i++){
+        for(let i=0; i<40; i++){
             setTimeout(() => {
                 const heart = document.createElement('div');
                 heart.innerHTML = '❤️';
                 heart.style.position = 'fixed';
                 heart.style.left = Math.random() * 100 + 'vw';
                 heart.style.top = '100vh';
-                heart.style.fontSize = (Math.random() * 30 + 20) + 'px';
+                heart.style.fontSize = (Math.random() * 25 + 15) + 'px';
                 heart.style.zIndex = '9999';
                 heart.style.transition = 'all 3s ease-out';
                 document.body.appendChild(heart);
                 
                 setTimeout(() => {
                     heart.style.top = '-10vh';
-                    heart.style.transform = `rotate(${Math.random() * 360}deg) scale(${Math.random() + 1})`;
+                    heart.style.transform = `rotate(${Math.random() * 360}deg)`;
                 }, 50);
                 
                 setTimeout(() => heart.remove(), 3000);
-            }, i * 50); // القلوب بتطلع ورا بعضها مش في نفس اللحظة
+            }, i * 80);
         }
     }
 </script>
