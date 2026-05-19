@@ -26,114 +26,82 @@
             transition: background 1s ease;
         }
 
-        /* 1. شاشة شروق الشمس */
+        /* شاشة شروق الشمس */
         #welcome-screen {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: linear-gradient(to bottom, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             z-index: 1000; transition: opacity 1s, visibility 1s;
         }
-        .sun-btn {
-            font-size: 80px; color: #ffeb3b; cursor: pointer;
-            filter: drop-shadow(0 0 20px #ffc107);
-            animation: pulse 2s infinite; margin-bottom: 20px;
-        }
+        .sun-btn { font-size: 80px; color: #ffeb3b; cursor: pointer; filter: drop-shadow(0 0 20px #ffc107); animation: pulse 2s infinite; margin-bottom: 20px; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
 
         /* المحتوى الرئيسي */
         #main-content { display: none; padding: 20px; max-width: 600px; margin: 0 auto; padding-bottom: 100px; }
 
-        /* 8. شريط الكلمات */
-        .marquee-container {
-            width: 100vw; background: rgba(255,255,255,0.3); padding: 10px 0;
-            position: absolute; top: 0; left: 0; overflow: hidden; white-space: nowrap;
-        }
+        /* شريط الكلمات */
+        .marquee-container { width: 100vw; background: rgba(255,255,255,0.3); padding: 10px 0; position: absolute; top: 0; left: 0; overflow: hidden; white-space: nowrap; }
         .marquee { display: inline-block; animation: scroll 15s linear infinite; font-weight: bold; color: var(--primary); }
         @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
         /* الكروت المشتركة */
-        .card {
-            background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(10px);
-            border-radius: 20px; padding: 25px; margin-top: 30px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05); text-align: center;
-            border: 2px solid rgba(255,255,255,0.8);
-        }
+        .card { background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(10px); border-radius: 20px; padding: 25px; margin-top: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); text-align: center; border: 2px solid rgba(255,255,255,0.8); }
 
-        /* 3. رسالة الآلة الكاتبة */
         #typewriter-text { font-size: 22px; min-height: 80px; color: var(--text-dark); font-weight: 700; line-height: 1.5; }
 
-        /* 6. رسالة الوعد (الصورة) */
-        .promise-box {
-            background: linear-gradient(135deg, #fff 0%, #f9f9f9 100%);
-            border-right: 8px solid var(--primary);
-            font-family: 'Aref Ruqaa', serif; font-size: 26px; line-height: 1.8;
-            color: #333; padding: 30px 20px; position: relative;
-        }
+        .promise-box { background: linear-gradient(135deg, #fff 0%, #f9f9f9 100%); border-right: 8px solid var(--primary); font-family: 'Aref Ruqaa', serif; font-size: 26px; line-height: 1.8; color: #333; padding: 30px 20px; position: relative; }
         .promise-box i { position: absolute; color: rgba(255, 75, 110, 0.1); font-size: 80px; top: 10px; left: 10px; }
 
-        /* 4. شريط الحب */
         input[type=range] { width: 100%; accent-color: var(--primary); margin: 15px 0; }
         #slider-result { font-size: 24px; font-weight: bold; color: var(--primary); }
 
-        /* 5. فقاعات الحب */
         .bubbles-container { display: flex; justify-content: space-around; margin-top: 20px; }
-        .bubble {
-            width: 80px; height: 80px; background: rgba(255,255,255,0.8);
-            border-radius: 50%; display: flex; justify-content: center; align-items: center;
-            cursor: pointer; font-size: 30px; box-shadow: inset 0 0 20px rgba(255,75,110,0.2);
-            transition: 0.3s;
-        }
+        .bubble { width: 80px; height: 80px; background: rgba(255,255,255,0.8); border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 30px; box-shadow: inset 0 0 20px rgba(255,75,110,0.2); transition: 0.3s; }
         .bubble.popped { background: var(--primary); color: white; font-size: 16px; font-weight: bold; width: 100px; height: 100px; padding: 10px; }
 
-        /* 7. الظرف السري */
         .envelope { font-size: 80px; color: #d4af37; cursor: pointer; transition: 0.5s; }
         #secret-paper { display: none; margin-top: 15px; font-size: 20px; font-weight: bold; color: var(--primary); }
 
-        /* 9. زرار الليل */
-        .night-btn {
-            background: #2c3e50; color: white; border: none; padding: 10px 20px;
-            border-radius: 20px; cursor: pointer; font-family: 'Cairo'; font-weight: bold; margin-top: 20px; width: 100%;
-        }
+        .night-btn { background: #2c3e50; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-family: 'Cairo'; font-weight: bold; margin-top: 20px; width: 100%; }
 
-        /* 11. أزرار المود */
-        .mood-btn {
-            background: var(--primary); color: white; border: none; padding: 8px 15px;
-            border-radius: 15px; cursor: pointer; font-family: 'Cairo'; font-weight: bold; margin: 5px; transition: 0.3s;
-        }
+        .mood-btn { background: var(--primary); color: white; border: none; padding: 8px 15px; border-radius: 15px; cursor: pointer; font-family: 'Cairo'; font-weight: bold; margin: 5px; transition: 0.3s; }
         .mood-btn:hover { background: var(--text-dark); }
 
-        /* 13. التذكرة */
-        .ticket {
-            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
-            border: 2px dashed #ccc; padding: 20px; border-radius: 10px;
-            color: #333; text-align: right; position: relative;
-        }
+        .ticket { background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%); border: 2px dashed #ccc; padding: 20px; border-radius: 10px; color: #333; text-align: right; position: relative; }
         .ticket::before { content: '✈️'; font-size: 40px; position: absolute; left: 20px; top: 20px; opacity: 0.2; }
 
-        /* 15. الصندوق المتشوش */
-        .blur-box {
-            background: #ff9a9e; color: transparent; text-shadow: 0 0 20px rgba(255,255,255,1);
-            padding: 30px; border-radius: 15px; cursor: pointer; transition: 1s; font-size: 22px; font-weight: bold;
-        }
+        .blur-box { background: #ff9a9e; color: transparent; text-shadow: 0 0 20px rgba(255,255,255,1); padding: 30px; border-radius: 15px; cursor: pointer; transition: 1s; font-size: 22px; font-weight: bold; }
         .clear-blur { background: transparent; color: var(--primary); text-shadow: none; border: 2px solid var(--primary); }
 
-        /* 10. زرار الانفجار */
-        .finale-btn {
-            background: var(--primary); color: white; border: none; padding: 15px 40px;
-            font-size: 22px; border-radius: 50px; cursor: pointer; font-family: 'Cairo';
-            font-weight: bold; width: 100%; margin-top: 40px; box-shadow: 0 10px 20px rgba(255, 75, 110, 0.4);
-        }
+        /* 16. البطارية */
+        .battery-container { width: 100px; height: 50px; border: 4px solid var(--text-dark); border-radius: 10px; position: relative; margin: 20px auto; padding: 2px; }
+        .battery-container::after { content: ''; position: absolute; right: -10px; top: 10px; width: 6px; height: 20px; background: var(--text-dark); border-radius: 0 5px 5px 0; }
+        .battery-level { width: 10%; height: 100%; background: #e74c3c; transition: all 1.5s ease; border-radius: 5px; }
 
-        /* مؤثرات الانفجار */
+        /* 17. محطة الذكريات */
+        .timeline { border-right: 4px solid var(--primary); padding-right: 20px; text-align: right; margin-top: 20px; }
+        .timeline-item { position: relative; margin-bottom: 20px; }
+        .timeline-item::before { content: '❤️'; position: absolute; right: -33px; top: 0; background: white; border-radius: 50%; font-size: 14px; padding: 2px; border: 2px solid var(--primary); }
+
+        /* 18. كشف الكذب */
+        .lie-container { position: relative; height: 100px; margin-top: 20px; }
+        .lie-btn { position: absolute; padding: 10px 20px; border-radius: 15px; font-weight: bold; border: none; cursor: pointer; transition: 0.2s; }
+        #btn-yes { background: var(--primary); color: white; right: 20%; top: 20px; }
+        #btn-no { background: #ccc; color: #333; left: 20%; top: 20px; }
+
+        /* 10. زرار الانفجار (الواتساب) */
+        .finale-btn { background: var(--primary); color: white; border: none; padding: 15px 40px; font-size: 22px; border-radius: 50px; cursor: pointer; font-family: 'Cairo'; font-weight: bold; width: 100%; margin-top: 40px; box-shadow: 0 10px 20px rgba(255, 75, 110, 0.4); animation: pulse 2s infinite; }
+
         .floating-heart { position: fixed; pointer-events: none; z-index: 9999; animation: floatUp 3s ease-in forwards; }
         @keyframes floatUp { 0% { transform: translateY(100vh) scale(0.5); opacity: 1; } 100% { transform: translateY(-20vh) scale(1.5) rotate(360deg); opacity: 0; } }
         
-        /* Night Mode Classes */
         body.night-mode { background: var(--night-bg); color: var(--text-light); }
         body.night-mode .card { background: rgba(0,0,0,0.5); border-color: rgba(255,255,255,0.2); color: white; }
         body.night-mode #typewriter-text { color: white; }
         body.night-mode .promise-box { background: rgba(255,255,255,0.1); color: #fff; }
         body.night-mode .ticket { background: rgba(255,255,255,0.1); border-color: #555; color: #ddd; }
+        body.night-mode .battery-container { border-color: white; }
+        body.night-mode .battery-container::after { background: white; }
     </style>
 </head>
 <body>
@@ -141,9 +109,7 @@
 <iframe id="music-player" src="https://www.youtube.com/embed/P4zcbCjB_H8?enablejsapi=1&autoplay=0&loop=1" allow="autoplay" style="display:none;"></iframe>
 
 <div id="welcome-screen">
-    <div class="sun-btn" onclick="startMorning()">
-        <i class="fa-solid fa-sun"></i>
-    </div>
+    <div class="sun-btn" onclick="startMorning()"><i class="fa-solid fa-sun"></i></div>
     <h1 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); font-size: 30px;">صباح الخير يا نانسي</h1>
     <p style="color: white; font-size: 18px; margin-top: 10px;">المسي الشمس عشان يومك يبدأ..</p>
 </div>
@@ -169,18 +135,40 @@
         <div id="mood-msg" style="display:none; margin-top:15px; font-weight:bold; color:var(--primary); font-size: 20px;"></div>
     </div>
 
+    <div class="card">
+        <h3>طاقتي بتيجي منك 🔋</h3>
+        <p style="font-size: 14px;">اضغطي على البطارية عشان تشحني يومي</p>
+        <div class="battery-container" onclick="chargeBattery()">
+            <div class="battery-level" id="battery-fill"></div>
+        </div>
+        <div id="battery-msg" style="display:none; font-weight:bold; color:#2ecc71; font-size: 22px;">تم الشحن 1000% ❤️</div>
+    </div>
+
     <div class="card promise-box">
         <i class="fa-solid fa-quote-left"></i>
         "بتقولي خايفه تبعد عني !!<br>
         عبيطة مبتشوفنيش بليل وانا قاعد مع نفسي وبفكر هنجح ازاي عشان أبسطها واعيشها احسن عيشه واجبلها اللي نفسها فيه." ❤️
     </div>
 
+    <div class="card">
+        <h3>شريط ذكرياتنا 🎞️</h3>
+        <div class="timeline">
+            <div class="timeline-item"><strong>أول ما عرفتك:</strong> حسيت إني لقيت حاجة ناقصاني.</div>
+            <div class="timeline-item"><strong>لما حبيتك:</strong> عرفت إن الدنيا لسه فيها أمان وسعادة.</div>
+            <div class="timeline-item"><strong>النهاردة:</strong> مش متخيل حياتي ثانية واحدة من غيرك.</div>
+        </div>
+    </div>
+
     <button class="night-btn" onclick="toggleNightMode()"><i class="fa-solid fa-moon"></i> جربي تدوسي هنا عشان تشوفي ليلي عامل إزاي</button>
 
     <div class="card">
-        <h3>اضغطي على قلبي ٥ مرات ❤️</h3>
-        <div id="tap-heart" style="font-size: 60px; cursor: pointer; transition: transform 0.2s; user-select:none; margin: 20px 0;" onclick="tapHeart()">❤️</div>
-        <div id="heart-msg" style="display:none; font-weight:bold; color:var(--primary); font-size: 22px;">عشان قلبي بيكبر بيكي وبحبك! 💓</div>
+        <h3>جهاز كشف المشاعر 🕵️‍♀️</h3>
+        <p>بتحبيني بجد يا نانسي؟</p>
+        <div class="lie-container">
+            <button id="btn-yes" class="lie-btn" onclick="loveConfirmed()">أيوة طبعاً بحبك ❤️</button>
+            <button id="btn-no" class="lie-btn" onmouseover="dodgeBtn()">لا مش بحبك 😒</button>
+        </div>
+        <div id="lie-msg" style="display:none; font-weight:bold; color:var(--primary); font-size: 20px; margin-top:10px;">كنت عارف إنك هتدوسي أيوة! 😂❤️</div>
     </div>
 
     <div class="card">
@@ -191,7 +179,6 @@
 
     <div class="card">
         <h3>بونبوناية الصباح 🍬</h3>
-        <p style="font-size: 16px; margin-bottom: 10px;">اضغطي على الزرار واسحبي بونبوناية حظك</p>
         <button class="mood-btn" onclick="randomCandy()">افتحي البونبوناية</button>
         <div id="candy-msg" style="display:none; margin-top:15px; font-weight:bold; color:var(--primary); font-size: 20px;"></div>
     </div>
@@ -209,146 +196,84 @@
         <h3 style="margin-bottom:10px; text-align: center; color: var(--primary);">تذكرة للمستقبل 🎟️</h3>
         <p style="font-size:20px; font-weight:bold;">الوجهة: بيت واحد يجمعنا طول العمر 🏡</p>
         <p style="font-size:18px;">الراكب: أنا وأنتي (VIP)</p>
-        <p style="font-size:16px; color:#888; margin-top: 10px;">تاريخ الصلاحية: مدى الحياة والآخرة</p>
-    </div>
-
-    <div class="card">
-        <h3>امسحي الغشاوة دي ✨</h3>
-        <p style="font-size: 14px; margin-bottom: 15px;">اضغطي على المربع عشان الرؤية توضح</p>
-        <div class="blur-box" onclick="this.classList.add('clear-blur')">
-            أنتي أجمل صدفة نورّت عمري كله
-        </div>
     </div>
 
     <div class="card">
         <h3>جواب صباحي مخصوص ليكي</h3>
         <div class="envelope" onclick="openEnvelope(this)"><i class="fa-solid fa-envelope"></i></div>
-        <div id="secret-paper">
-            حتى وإنتي نايمة بكون بفكر فيكي.. قومي بقى وحشتيني! 😍
-        </div>
+        <div id="secret-paper">حتى وإنتي نايمة بكون بفكر فيكي.. قومي بقى وحشتيني! 😍</div>
     </div>
 
-    <button class="finale-btn" onclick="fireworks()">حضن الصباح (اضغطي هنا) ❤️</button>
+    <button class="finale-btn" onclick="fireworksAndWhatsApp()">حضن الصباح (اضغطي هنا) 🫂</button>
+    <p style="text-align: center; font-size: 14px; margin-top: 10px; color: #888;">*الزرار ده هيبعتلي رسالة منك على الواتساب تقوليلى رأيك*</p>
 
 </div>
 
 <script>
-    // 1. تشغيل الموقع والموسيقى
     function startMorning() {
         document.getElementById('welcome-screen').style.opacity = '0';
         setTimeout(() => {
             document.getElementById('welcome-screen').style.visibility = 'hidden';
             document.getElementById('main-content').style.display = 'block';
             const ytPlayer = document.getElementById('music-player');
-            if (ytPlayer && ytPlayer.contentWindow) {
-                ytPlayer.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-            }
+            if (ytPlayer && ytPlayer.contentWindow) { ytPlayer.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*'); }
             typeWriter();
         }, 1000);
     }
 
-    // 3. الآلة الكاتبة
     const textToType = "صباح الخير يا أجمل حاجة حصلتلي في دنيتي.. حبيت أصحيكي على حاجة تفرح قلبك وتعرفك إنك أول حاجة بتيجي في بالي أول ما بفتح عيني.. بحبك يا نانسي.";
     let i = 0;
     function typeWriter() {
-        if (i < textToType.length) {
-            document.getElementById("typewriter-text").innerHTML += textToType.charAt(i);
-            i++;
-            setTimeout(typeWriter, 50);
-        }
+        if (i < textToType.length) { document.getElementById("typewriter-text").innerHTML += textToType.charAt(i); i++; setTimeout(typeWriter, 50); }
     }
 
-    // 11. سؤال المود
     function moodReply(mood) {
-        const m = document.getElementById('mood-msg');
-        m.style.display = 'block';
-        if(mood === 'تعبانة') m.innerHTML = 'ألف سلامة عليكي يا روحي، يا ريت التعب فيا ولا فيكي ودراعك يخف بسرعة 🥺';
-        if(mood === 'مبسوطة') m.innerHTML = 'يا رب دايماً ضحكتك منورة الدنيا ومبسوطة، عشان سعادتي من سعادتك 🥰';
-        if(mood === 'مكسلة') m.innerHTML = 'نامي وارتاحي يا حبيبتي، أنا سهران أحرس أحلامك لحد ما تصحصحي 😴';
+        const m = document.getElementById('mood-msg'); m.style.display = 'block';
+        if(mood === 'تعبانة') m.innerHTML = 'ألف سلامة عليكي يا روحي، دراعك هيخف و تبقي زي الفل 🥺';
+        if(mood === 'مبسوطة') m.innerHTML = 'سعادتي من سعادتك يا حبيبتي 🥰';
+        if(mood === 'مكسلة') m.innerHTML = 'نامي وارتاحي يا قلبي، أنا سهران أحرس أحلامك 😴';
     }
 
-    // 12. القلب النابض
-    let heartTaps = 0;
-    function tapHeart() {
-        heartTaps++;
-        const h = document.getElementById('tap-heart');
-        h.style.transform = `scale(${1 + heartTaps * 0.2})`;
-        if(heartTaps >= 5) {
-            h.style.display = 'none';
-            document.getElementById('heart-msg').style.display = 'block';
-            createMiniHearts(h.parentElement);
-        }
+    function chargeBattery() {
+        const fill = document.getElementById('battery-fill');
+        fill.style.width = '100%';
+        fill.style.background = '#2ecc71';
+        document.getElementById('battery-msg').style.display = 'block';
     }
 
-    // 4. شريط الحب
+    function dodgeBtn() {
+        const btn = document.getElementById('btn-no');
+        const container = document.querySelector('.lie-container');
+        const maxX = container.offsetWidth - btn.offsetWidth;
+        const maxY = container.offsetHeight - btn.offsetHeight;
+        btn.style.left = Math.floor(Math.random() * maxX) + 'px';
+        btn.style.top = Math.floor(Math.random() * maxY) + 'px';
+    }
+
+    function loveConfirmed() {
+        document.getElementById('btn-no').style.display = 'none';
+        document.getElementById('lie-msg').style.display = 'block';
+    }
+
     function checkLove() {
-        const slider = document.getElementById('love-slider');
-        const result = document.getElementById('slider-result');
-        if(slider.value < 50) {
-            result.innerText = "أكتر من كده بكتير..";
-        } else if (slider.value < 100) {
-            result.innerText = "قربي كمان..";
-        } else {
-            result.innerText = "بحبك أكتر من ما لا نهاية! ♾️❤️";
-            createMiniHearts(document.getElementById('love-slider').parentElement);
-        }
+        const slider = document.getElementById('love-slider'); const result = document.getElementById('slider-result');
+        if(slider.value < 50) result.innerText = "أكتر من كده بكتير..";
+        else if (slider.value < 100) result.innerText = "قربي كمان..";
+        else { result.innerText = "بحبك أكتر من ما لا نهاية! ♾️❤️"; }
     }
 
-    function createMiniHearts(container) {
-        for(let j=0; j<5; j++) {
-            const heart = document.createElement('div');
-            heart.innerHTML = '❤️';
-            heart.style.position = 'absolute';
-            heart.style.left = Math.random() * 100 + '%';
-            heart.style.top = '50%';
-            heart.style.fontSize = '20px';
-            heart.style.animation = 'floatUp 1s forwards';
-            container.appendChild(heart);
-            setTimeout(() => heart.remove(), 1000);
-        }
-    }
-
-    // 14. بونبوناية الصباح
-    const candies = [
-        'عيونك فيها سحر بيخطفني كل مرة ببصلك فيها 👀', 
-        'صوتك بيطمني وبيحسسني إن الدنيا لسه بخير 🎶', 
-        'ضحكتك بتنسيني كل همومي وتعبي ☀️', 
-        'أنتي مش بس حبيبتي، أنتي بنتي وصاحبتي وكل دنيتي 👑'
-    ];
+    const candies = ['عيونك فيها سحر بيخطفني 👀', 'صوتك بيطمني 🎶', 'ضحكتك بتنسيني كل همومي ☀️', 'أنتي بنتي وصاحبتي وكل دنيتي 👑'];
     function randomCandy() {
         document.getElementById('candy-msg').style.display = 'block';
         document.getElementById('candy-msg').innerHTML = candies[Math.floor(Math.random() * candies.length)];
     }
 
-    // 5. فرقعة الفقاعات
-    function popBubble(element, text) {
-        element.innerHTML = text;
-        element.classList.add('popped');
-        element.style.pointerEvents = 'none';
-    }
+    function popBubble(element, text) { element.innerHTML = text; element.classList.add('popped'); element.style.pointerEvents = 'none'; }
+    function openEnvelope(element) { element.innerHTML = '<i class="fa-solid fa-envelope-open-text"></i>'; element.style.color = 'var(--primary)'; document.getElementById('secret-paper').style.display = 'block'; }
+    function toggleNightMode() { document.body.classList.toggle('night-mode'); const btn = document.querySelector('.night-btn'); btn.innerHTML = document.body.classList.contains('night-mode') ? '<i class="fa-solid fa-sun"></i> رجعيني للنهار تاني' : '<i class="fa-solid fa-moon"></i> جربي تدوسي هنا عشان تشوفي ليلي عامل إزاي'; btn.style.background = document.body.classList.contains('night-mode') ? '#f39c12' : '#2c3e50'; }
 
-    // 7. فتح الظرف
-    function openEnvelope(element) {
-        element.innerHTML = '<i class="fa-solid fa-envelope-open-text"></i>';
-        element.style.color = 'var(--primary)';
-        document.getElementById('secret-paper').style.display = 'block';
-    }
-
-    // 9. وضع الليل
-    function toggleNightMode() {
-        document.body.classList.toggle('night-mode');
-        const btn = document.querySelector('.night-btn');
-        if(document.body.classList.contains('night-mode')) {
-            btn.innerHTML = '<i class="fa-solid fa-sun"></i> رجعيني للنهار تاني';
-            btn.style.background = '#f39c12';
-        } else {
-            btn.innerHTML = '<i class="fa-solid fa-moon"></i> جربي تدوسي هنا عشان تشوفي ليلي عامل إزاي';
-            btn.style.background = '#2c3e50';
-        }
-    }
-
-    // 10. انفجار الورد والقلوب
-    function fireworks() {
+    // التحويل التلقائي للواتساب بعد الانفجار
+    function fireworksAndWhatsApp() {
         const emojis = ['❤️', '🌸', '🌹', '✨', '🥰'];
         for(let j=0; j<60; j++) {
             setTimeout(() => {
@@ -362,6 +287,14 @@
                 setTimeout(() => heart.remove(), 4000);
             }, j * 50);
         }
+
+        // كود فتح الواتساب برقمك ورسالة جاهزة بعد 3.5 ثانية (عشان تلحق تشوف القلوب)
+        setTimeout(() => {
+            const phoneNumber = "201141443841"; // رقمك بكود مصر
+            const message = "صباح الفل يا حبيبي.. أنا شفت المفاجأة الحلوة دي، وكنت عايزة أقولك إني حاسة بـ...";
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+            window.location.href = whatsappUrl;
+        }, 3500);
     }
 </script>
 
