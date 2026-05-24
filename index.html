@@ -3,257 +3,328 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>مفاجأة عيد الأضحى لنانسي</title>
+  <title>مفاجأة عيد الأضحى السحرية لنانسي</title>
   <style>
     /* الإعدادات الأساسية */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background-color: #0b0b12; 
+      background-color: #07070d; 
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      overflow-x: hidden;
-      min-height: 100vh;
-      color: #fff;
+      overflow: hidden; min-height: 100vh; color: #fff;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      user-select: none;
     }
 
-    /* خلفية رموز العيد */
-    .particles-bg {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      z-index: 1; pointer-events: none;
-    }
+    /* خلفية الاحتفالات */
+    .particles-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
 
-    /* المحتوى الرئيسي */
-    .welcome-container {
-      display: flex; flex-direction: column; align-items: center;
-      justify-content: center; min-height: 90vh; padding: 20px;
-      position: relative; z-index: 2; text-align: center;
+    /* الحاويات للخطوات */
+    .step-container {
+      display: none; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; z-index: 2; padding: 20px; animation: scaleUp 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
+    .step-container.active { display: flex; }
+    @keyframes scaleUp { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
 
-    /* تأثير الكتابة التلقائية */
-    .typewriter-text {
-      font-size: 30px; font-weight: bold; margin-bottom: 40px; min-height: 80px;
+    /* النصوص الذهبية المتوهجة */
+    .fancy-text {
+      font-size: 28px; font-weight: bold; margin-bottom: 25px;
       background: linear-gradient(135deg, #d4af37, #f3e5ab, #d4af37);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      text-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
-      border-left: 3px solid #d4af37; /* مؤشر الكتابة */
-      padding-left: 5px;
-      animation: blinkCursor 0.7s infinite;
-    }
-    @keyframes blinkCursor {
-      0%, 100% { border-color: transparent; }
-      50% { border-color: #d4af37; }
+      text-shadow: 0 4px 20px rgba(212, 175, 55, 0.4); line-height: 1.6;
     }
 
-    /* الزرار المخفي في البداية */
-    .action-btn-container {
-      opacity: 0; transform: translateY(20px);
-      transition: all 1s ease; pointer-events: none;
+    /* نبض اسم نانسي السحري */
+    .nancy-glow {
+      color: #fff; text-shadow: 0 0 10px #ff4d6d, 0 0 20px #ff4d6d, 0 0 30px #ff4d6d;
+      animation: heartPulse 1.5s infinite alternate; display: inline-block;
     }
-    .action-btn-container.show {
-      opacity: 1; transform: translateY(0); pointer-events: auto;
+    @keyframes heartPulse { 0% { transform: scale(1); } 100% { transform: scale(1.1); text-shadow: 0 0 20px #ff4d6d, 0 0 40px #d4af37; } }
+
+    /* صندوق الهدايا السحري */
+    .gift-box {
+      font-size: 80px; cursor: pointer; margin-top: 20px; display: none;
+      animation: shake 0.5s ease infinite alternate; transition: transform 0.3s;
+    }
+    .gift-box:hover { transform: scale(1.2); }
+    @keyframes shake { 0% { transform: rotate(-8deg); } 100% { transform: rotate(8deg); } }
+
+    /* الأزرار الاحترافية */
+    .action-btn {
+      background: linear-gradient(135deg, #1a1a2e, #0f0f1a); color: #ffffff; border: 2px solid #d4af37;
+      padding: 16px 36px; font-size: 20px; font-weight: bold; border-radius: 50px; cursor: pointer;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6); transition: all 0.3s ease; margin-top: 15px; z-index: 10;
+    }
+    .action-btn:hover {
+      transform: translateY(-5px); background: linear-gradient(135deg, #d4af37, #aa841e);
+      color: #0b0b12; box-shadow: 0 12px 30px rgba(212, 175, 55, 0.6);
     }
 
-    /* تصميم الزرار المبهر */
-    .premium-btn {
-      background: linear-gradient(135deg, #1a1a2e, #0f0f1a);
-      color: #ffffff; border: 2px solid #d4af37;
-      padding: 18px 36px; font-size: 20px; font-weight: bold;
-      border-radius: 50px; cursor: pointer; position: relative;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
-      transition: all 0.3s ease;
-    }
-    .premium-btn:hover {
-      transform: translateY(-5px);
-      background: linear-gradient(135deg, #d4af37, #aa841e);
-      color: #0b0b12; box-shadow: 0 12px 30px rgba(212, 175, 55, 0.5);
-    }
-
-    /* قاعة العرض والتعتيم */
+    /* قاعة السينما والتعتيم */
     .cinema-overlay {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background-color: rgba(0, 0, 0, 0.98); backdrop-filter: blur(15px);
+      background-color: rgba(0, 0, 0, 0.99); backdrop-filter: blur(20px);
       z-index: 99999; opacity: 0; transition: opacity 0.5s ease;
     }
 
-    /* شاشة الموبايل بالطول (التعديل الأهم لحجم الفيديو) */
     .cinema-container {
-      position: absolute; top: 50%; left: 50%;
-      transform: translate(-50%, -50%) scale(0.9);
-      width: 95vw; /* عرض يملى الشاشة */
-      height: 85vh; /* طول يملى الشاشة */
-      max-width: 450px; /* عشان لو فتحته من الكمبيوتر ميبقاش شكله وحش */
-      transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9);
+      width: 95vw; height: 85vh; max-width: 450px; transition: transform 0.5s ease;
     }
-    .cinema-overlay.active .cinema-container {
-      transform: translate(-50%, -50%) scale(1);
-    }
+    .cinema-overlay.active .cinema-container { transform: translate(-50%, -50%) scale(1); }
 
     /* شاشة العد التنازلي */
     .countdown-screen {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      background: #0b0b12; border-radius: 20px; border: 2px solid #d4af37;
+      background: #07070d; border-radius: 20px; border: 2px solid #d4af37;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      font-size: 100px; font-weight: bold; color: #d4af37;
-      z-index: 10; box-shadow: inset 0 0 50px rgba(212, 175, 55, 0.2);
-    }
-    .countdown-text {
-      animation: popInOut 1s ease-in-out infinite;
-    }
-    @keyframes popInOut {
-      0% { transform: scale(0.5); opacity: 0; }
-      50% { transform: scale(1.2); opacity: 1; }
-      100% { transform: scale(1); opacity: 0; }
+      font-size: 110px; font-weight: bold; color: #d4af37; z-index: 10;
     }
 
-    /* زرار الإغلاق */
+    /* حاوية الفيديو مع الإضاءة السينمائية التنفسية */
+    .video-wrapper {
+      position: relative; width: 100%; height: 100%; border-radius: 20px; overflow: hidden;
+      border: 2px solid #d4af37; background: #000;
+      animation: breathingGlow 3s infinite alternate;
+    }
+    @keyframes breathingGlow {
+      0% { box-shadow: 0 0 20px rgba(212, 175, 55, 0.2); }
+      100% { box-shadow: 0 0 50px rgba(212, 175, 55, 0.7); }
+    }
+    .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+
+    /* زرار تكبير الشاشة الفخم */
+    .fullscreen-btn {
+      position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.8); color: #fff; border: 1px solid #d4af37;
+      padding: 12px 24px; border-radius: 30px; font-size: 16px; font-weight: bold;
+      cursor: pointer; z-index: 5; backdrop-filter: blur(5px); transition: 0.3s;
+    }
+    .fullscreen-btn:hover { background: #d4af37; color: #000; }
+
+    /* زر الإغلاق */
     .close-btn {
-      position: absolute; top: -45px; left: 0;
-      background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3);
-      color: #fff; padding: 8px 20px; border-radius: 30px; cursor: pointer;
-      transition: 0.3s;
+      position: absolute; top: -45px; right: 0; background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3); color: #fff; padding: 8px 20px;
+      border-radius: 30px; cursor: pointer; transition: 0.3s;
     }
     .close-btn:hover { background: #e63946; border-color: transparent; }
 
-    /* حاوية الفيديو الطولية */
-    .video-wrapper {
-      position: relative; width: 100%; height: 100%;
-      border-radius: 20px; overflow: hidden; border: 2px solid #d4af37;
-      box-shadow: 0 10px 40px rgba(212, 175, 55, 0.2);
+    /* تأثير تايب رايتر */
+    .typewriter { border-left: 3px solid #d4af37; padding-left: 5px; white-space: pre-wrap; }
+
+    /* التوقيع الرومانسي */
+    .love-footer {
+      position: fixed; bottom: 15px; width: 100%; text-align: center;
+      font-size: 14px; color: rgba(255, 255, 255, 0.6); z-index: 2; pointer-events: none;
+      letter-spacing: 1px; animation: fadeIn 3s ease forwards;
     }
-    .video-wrapper iframe {
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;
+
+    /* الشرارات السحرية للماوس واللمس */
+    .magic-dust {
+      position: fixed; width: 6px; height: 6px; background: #d4af37; border-radius: 50%;
+      pointer-events: none; z-index: 9999; animation: dustFade 0.6s forwards;
+      box-shadow: 0 0 10px #d4af37;
     }
+    @keyframes dustFade { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(0); opacity: 0; transform: translateY(20px); } }
   </style>
 </head>
 <body>
 
+  <audio id="sheepSound" src="sheep.mp3" preload="auto"></audio>
+  <audio id="eidSong" src="eid.mp3" preload="auto" loop></audio>
+
+  <div class="love-footer">بكل الحب.. من عبدالله لـ نانسي ❤️</div>
+
   <div class="particles-bg" id="particlesBg"></div>
 
-  <div class="welcome-container">
-    <div id="typewriter" class="typewriter-text"></div>
-    
-    <div id="btnContainer" class="action-btn-container">
-      <button id="openCinemaBtn" class="premium-btn">
-        🎬 افتحي العيدية من هنا
-      </button>
-    </div>
+  <div id="step1" class="step-container active">
+    <div id="text1" class="fancy-text typewriter"></div>
+    <div id="giftBox" class="gift-box">🎁</div>
+  </div>
+
+  <div id="step2" class="step-container">
+    <div class="fancy-text">ماء ماء! 🐑😂<br>كل خروف وأنتي طيبة يا نانسي!<br>جاهزة نقلب الموقع احتفال؟</div>
+    <button id="btn2" class="action-btn">شغلي أجواء العيد 🎉</button>
+  </div>
+
+  <div id="step3" class="step-container">
+    <div class="fancy-text">العيد فرحة وأنتي أجمل فرحة في حياتي ❤️<br>دلوقتي وقت العيدية السينمائية الحقيقية!</div>
+    <button id="btn3" class="action-btn">🎬 افتحي العيدية السينمائية</button>
   </div>
 
   <div id="cinemaOverlay" class="cinema-overlay">
-    <div class="cinema-container">
-      <button id="closeCinemaBtn" class="close-btn">✕ إغلاق</button>
+    <div class="cinema-container" id="cinemaContainer">
+      <button id="closeCinemaBtn" class="close-btn">✕ إغلاق الشاشة</button>
       
       <div id="countdownScreen" class="countdown-screen">
-        <span id="countdownNumber" class="countdown-text">3</span>
+        <span id="countdownNumber">3</span>
       </div>
 
-      <div class="video-wrapper">
+      <div class="video-wrapper" id="videoWrapper">
         <iframe id="cinemaVideo" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        <button id="fullscreenBtn" class="fullscreen-btn">⛶ تكبير الشاشة بالكامل</button>
       </div>
     </div>
   </div>
 
   <script>
-    // 1. تأثير الكتابة التلقائية (Typewriter)
-    const text = "كل عيد أضحى وأنتي معايا يا نانسي ✨";
-    const typewriterElement = document.getElementById('typewriter');
-    const btnContainer = document.getElementById('btnContainer');
+    // --- تأثير الكتابة الجديد واللطيف ونبض اسم نانسي ---
+    const msg1 = "يا أجمل حاجة حصلتلي وأحلى رزق في حياتي ✨\nكل عيد أضحى وأنتي منورة دنيتي يا نانسي ❤️\nعشان تفتحي عيديتك.. اضغطي على الصندوق ده 👇";
     let i = 0;
-
     function typeWriter() {
-      if (i < text.length) {
-        typewriterElement.innerHTML += text.charAt(i);
+      if (i < msg1.length) {
+        document.getElementById("text1").innerHTML += msg1.charAt(i);
         i++;
-        setTimeout(typeWriter, 100); // سرعة الكتابة
+        setTimeout(typeWriter, 80); // سرعة الكتابة مريحة للعين
       } else {
-        // إزالة مؤشر الكتابة وإظهار الزرار
-        typewriterElement.style.border = 'none';
-        setTimeout(() => {
-          btnContainer.classList.add('show');
-        }, 500);
+        document.getElementById("text1").style.border = 'none';
+        // تفعيل الإضاءة لاسم نانسي بعد انتهاء الكتابة
+        document.getElementById("text1").innerHTML = document.getElementById("text1").innerHTML.replace('نانسي', '<span class="nancy-glow">نانسي</span>');
+        document.getElementById("giftBox").style.display = "block";
       }
     }
-    
-    // تشغيل الكتابة بعد تحميل الصفحة بثانية
-    window.onload = () => {
-      createEidParticles();
-      setTimeout(typeWriter, 1000);
-    };
+    window.onload = () => { createEidParticles(); setTimeout(typeWriter, 500); };
 
-    // 2. التحكم في السينما والعد التنازلي
-    const openBtn = document.getElementById('openCinemaBtn');
-    const closeBtn = document.getElementById('closeCinemaBtn');
+    // --- بريق سحري للماوس واللمس ---
+    function createDust(x, y) {
+      const dust = document.createElement('div');
+      dust.className = 'magic-dust';
+      dust.style.left = x + 'px'; dust.style.top = y + 'px';
+      document.body.appendChild(dust);
+      setTimeout(() => dust.remove(), 600);
+    }
+    document.addEventListener('mousemove', (e) => createDust(e.clientX, e.clientY));
+    document.addEventListener('touchmove', (e) => createDust(e.touches[0].clientX, e.touches[0].clientY));
+
+    // --- التنقل بين الخطوات ---
+    const step1 = document.getElementById('step1');
+    const step2 = document.getElementById('step2');
+    const step3 = document.getElementById('step3');
+    const sheepSound = document.getElementById('sheepSound');
+    const eidSong = document.getElementById('eidSong');
+
+    document.getElementById('giftBox').addEventListener('click', () => {
+      step1.classList.remove('active'); step2.classList.add('active');
+      sheepSound.play().catch(e => console.log(e));
+    });
+
+    document.getElementById('btn2').addEventListener('click', () => {
+      step2.classList.remove('active'); step3.classList.add('active');
+      eidSong.play().catch(e => console.log(e));
+      createFireworks(); 
+      startBalloonsRain();
+      createGoldenExplosion(); // انفجار العيدية الذهبي
+    });
+
+    // --- زرار فتح السينما والتحكم الذكي بالصوت ---
+    const btn3 = document.getElementById('btn3');
     const overlay = document.getElementById('cinemaOverlay');
     const video = document.getElementById('cinemaVideo');
     const countdownScreen = document.getElementById('countdownScreen');
     const countdownNumber = document.getElementById('countdownNumber');
-    
-    // رابط الفيديو بتاعك
     const videoUrl = "https://drive.google.com/file/d/1sG9P_Q-AVSCd7jsyYttfDG1bsdRTRpxn/preview";
 
-    openBtn.addEventListener('click', () => {
+    btn3.addEventListener('click', () => {
+      eidSong.pause(); // إيقاف الأغنية بذكاء
       overlay.style.display = 'block';
       setTimeout(() => {
-        overlay.style.opacity = '1';
-        overlay.classList.add('active');
-        
-        // بدأ العد التنازلي 3.. 2.. 1..
-        let count = 3;
-        countdownNumber.innerText = count;
-        countdownScreen.style.display = 'flex';
-        video.src = ""; // تأكيد إن الفيديو مش شغال
-
+        overlay.style.opacity = '1'; overlay.classList.add('active');
+        let count = 3; countdownNumber.innerText = count; countdownScreen.style.display = 'flex'; video.src = ""; 
         const interval = setInterval(() => {
           count--;
-          if (count > 0) {
-            countdownNumber.innerText = count;
-            // حركة صغيرة عشان الأنيميشن يشتغل تاني
-            countdownNumber.style.animation = 'none';
-            countdownNumber.offsetHeight; 
-            countdownNumber.style.animation = 'popInOut 1s ease-in-out infinite';
-          } else {
-            clearInterval(interval);
-            // إخفاء العد التنازلي وتشغيل الفيديو
-            countdownScreen.style.display = 'none';
-            video.src = videoUrl; // إضافة اللينك عشان يشتغل فوراً
+          if (count > 0) { countdownNumber.innerText = count; } 
+          else {
+            clearInterval(interval); countdownScreen.style.display = 'none';
+            video.src = videoUrl; // تشغيل الفيديو
           }
-        }, 1000); // كل ثانية
-
+        }, 1000);
       }, 20);
     });
 
-    // إغلاق الشاشة وإيقاف الفيديو
-    closeBtn.addEventListener('click', () => {
-      overlay.style.opacity = '0';
-      overlay.classList.remove('active');
+    // --- إغلاق السينما وإعادة تشغيل الأغنية ---
+    document.getElementById('closeCinemaBtn').addEventListener('click', () => {
+      overlay.style.opacity = '0'; overlay.classList.remove('active');
       setTimeout(() => {
-        overlay.style.display = 'none';
-        video.src = ""; // إيقاف الفيديو والصوت تماماً
+        overlay.style.display = 'none'; video.src = ""; 
+        eidSong.play().catch(e => console.log(e)); // إرجاع الأغنية
       }, 500);
     });
 
-    // 3. خلفية رموز العيد المتطايرة
+    // --- زرار تكبير الشاشة الفخم (Fullscreen) ---
+    const videoWrapper = document.getElementById('videoWrapper');
+    document.getElementById('fullscreenBtn').addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        if (videoWrapper.requestFullscreen) { videoWrapper.requestFullscreen(); } 
+        else if (videoWrapper.webkitRequestFullscreen) { videoWrapper.webkitRequestFullscreen(); }
+        document.getElementById('fullscreenBtn').innerText = "✕ تصغير الشاشة";
+      } else {
+        if (document.exitFullscreen) { document.exitFullscreen(); }
+        document.getElementById('fullscreenBtn').innerText = "⛶ تكبير الشاشة بالكامل";
+      }
+    });
+
+    // --- انفجار الذهب ---
+    function createGoldenExplosion() {
+      for(let i=0; i<40; i++) {
+        const conf = document.createElement('div');
+        conf.innerText = ['✨','💰','🌟'][Math.floor(Math.random()*3)];
+        conf.style.position = 'absolute'; conf.style.left = '50vw'; conf.style.top = '50vh';
+        conf.style.fontSize = Math.random() * 20 + 10 + 'px'; conf.style.pointerEvents = 'none'; conf.style.zIndex = 100;
+        document.body.appendChild(conf);
+        const angle = Math.random() * Math.PI * 2; const velocity = Math.random() * 250 + 50;
+        const tx = Math.cos(angle) * velocity; const ty = Math.sin(angle) * velocity;
+        conf.animate([
+          { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
+          { transform: `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(0)`, opacity: 0 }
+        ], { duration: 1500, easing: 'ease-out' });
+        setTimeout(() => conf.remove(), 1500);
+      }
+    }
+
+    // --- خلفية العيد الدائمة ---
     function createEidParticles() {
       const bg = document.getElementById('particlesBg');
-      const eidEmojis = ['🐑', '🎈', '✨', '🌙', '🎉', '💖']; 
-      for(let j = 0; j < 25; j++) {
-        const particle = document.createElement('div');
-        particle.innerText = eidEmojis[Math.floor(Math.random() * eidEmojis.length)];
-        particle.style.position = 'absolute';
-        particle.style.fontSize = Math.random() * 15 + 15 + 'px';
-        particle.style.opacity = Math.random() * 0.6 + 0.2;
-        particle.style.top = Math.random() * 100 + 'vh';
-        particle.style.left = Math.random() * 100 + 'vw';
-        
-        particle.animate([
-          { transform: 'translateY(0) rotate(0deg)', opacity: particle.style.opacity },
-          { transform: `translateY(-${Math.random() * 200 + 100}px) rotate(${Math.random() * 360}deg)`, opacity: 0 }
-        ], {
-          duration: Math.random() * 5000 + 4000,
-          iterations: Infinity,
-          easing: 'ease-in-out'
-        });
-        bg.appendChild(particle);
+      const eidEmojis = ['🐑', '✨', '🌙', '🎉']; 
+      for(let j = 0; j < 15; j++) {
+        const p = document.createElement('div');
+        p.innerText = eidEmojis[Math.floor(Math.random() * eidEmojis.length)];
+        p.style.position = 'absolute'; p.style.fontSize = Math.random() * 15 + 15 + 'px';
+        p.style.opacity = Math.random() * 0.4 + 0.2;
+        p.style.top = Math.random() * 100 + 'vh'; p.style.left = Math.random() * 100 + 'vw';
+        p.animate([ { transform: 'translateY(0) rotate(0deg)' }, { transform: `translateY(-150px) rotate(${Math.random() * 360}deg)` } ], { duration: Math.random() * 5000 + 4000, iterations: Infinity, easing: 'ease-in-out' });
+        bg.appendChild(p);
       }
+    }
+
+    // --- تأثير الألعاب النارية ---
+    function createFireworks() {
+      const bg = document.getElementById('particlesBg');
+      for(let j = 0; j < 25; j++) {
+        const firework = document.createElement('div');
+        firework.style.position = 'absolute'; firework.style.width = '8px'; firework.style.height = '8px';
+        firework.style.backgroundColor = ['#ff4d6d', '#d4af37', '#00f5d4', '#fee440'][Math.floor(Math.random() * 4)];
+        firework.style.borderRadius = '50%'; firework.style.top = '100vh'; firework.style.left = Math.random() * 100 + 'vw';
+        firework.animate([ { transform: 'translateY(0) scale(1)', opacity: 1 }, { transform: `translateY(-${Math.random() * 70 + 20}vh) scale(0)`, opacity: 0 } ], { duration: Math.random() * 2000 + 1200, iterations: Infinity, easing: 'ease-out' });
+        bg.appendChild(firework);
+      }
+    }
+
+    // --- مطر البلالين والقلوب ---
+    function startBalloonsRain() {
+      const bg = document.getElementById('particlesBg');
+      const items = ['🎈', '💖', '🎈', '💝']; 
+      setInterval(() => {
+        if(step3.classList.contains('active')) {
+          const balloon = document.createElement('div');
+          balloon.innerText = items[Math.floor(Math.random() * items.length)];
+          balloon.style.position = 'absolute'; balloon.style.fontSize = Math.random() * 20 + 20 + 'px';
+          balloon.style.top = '-50px'; balloon.style.left = Math.random() * 100 + 'vw';
+          balloon.animate([ { transform: 'translateY(0) rotate(0deg)', opacity: 1 }, { transform: `translateY(110vh) rotate(${Math.random() * 100 - 50}deg)`, opacity: 0 } ], { duration: Math.random() * 4000 + 4000, easing: 'linear' });
+          bg.appendChild(balloon);
+          setTimeout(() => balloon.remove(), 8000);
+        }
+      }, 350);
     }
   </script>
 </body>
