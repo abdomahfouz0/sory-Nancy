@@ -3,167 +3,124 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>مفاجأة عيد الأضحى</title>
+  <title>مفاجأة عيد الأضحى لنانسي</title>
   <style>
-    /* الإعدادات الأساسية لتهيئة الصفحة */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    /* الإعدادات الأساسية */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background-color: #0b0b12; /* خلفية داكنة فخمة */
+      background-color: #0b0b12; 
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       overflow-x: hidden;
       min-height: 100vh;
+      color: #fff;
     }
 
-    /* حاوية العرض الأساسية في الصفحة */
+    /* خلفية رموز العيد */
+    .particles-bg {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      z-index: 1; pointer-events: none;
+    }
+
+    /* المحتوى الرئيسي */
     .welcome-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 80vh;
-      padding: 20px;
-      position: relative;
-      z-index: 2;
-      text-align: center;
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; min-height: 90vh; padding: 20px;
+      position: relative; z-index: 2; text-align: center;
     }
 
-    /* نص التهنئة الخاص بعيد الأضحى لنانسي */
-    .eid-greeting {
-      font-size: 32px;
-      font-weight: bold;
-      margin-bottom: 30px;
+    /* تأثير الكتابة التلقائية */
+    .typewriter-text {
+      font-size: 30px; font-weight: bold; margin-bottom: 40px; min-height: 80px;
       background: linear-gradient(135deg, #d4af37, #f3e5ab, #d4af37);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       text-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
-      animation: fadeInGlow 3s ease-in-out infinite alternate;
+      border-left: 3px solid #d4af37; /* مؤشر الكتابة */
+      padding-left: 5px;
+      animation: blinkCursor 0.7s infinite;
+    }
+    @keyframes blinkCursor {
+      0%, 100% { border-color: transparent; }
+      50% { border-color: #d4af37; }
     }
 
-    @keyframes fadeInGlow {
-      0% { text-shadow: 0 4px 15px rgba(212, 175, 55, 0.2); }
-      100% { text-shadow: 0 4px 25px rgba(212, 175, 55, 0.6); }
+    /* الزرار المخفي في البداية */
+    .action-btn-container {
+      opacity: 0; transform: translateY(20px);
+      transition: all 1s ease; pointer-events: none;
+    }
+    .action-btn-container.show {
+      opacity: 1; transform: translateY(0); pointer-events: auto;
     }
 
-    /* تصميم الزرار المبهر النابض */
+    /* تصميم الزرار المبهر */
     .premium-btn {
       background: linear-gradient(135deg, #1a1a2e, #0f0f1a);
-      color: #ffffff;
-      border: 2px solid #d4af37;
-      padding: 18px 36px;
-      font-size: 20px;
-      font-weight: bold;
-      border-radius: 50px;
-      cursor: pointer;
-      position: relative;
-      outline: none;
+      color: #ffffff; border: 2px solid #d4af37;
+      padding: 18px 36px; font-size: 20px; font-weight: bold;
+      border-radius: 50px; cursor: pointer; position: relative;
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
-      transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
     }
-
     .premium-btn:hover {
       transform: translateY(-5px);
       background: linear-gradient(135deg, #d4af37, #aa841e);
-      color: #0b0b12;
-      box-shadow: 0 12px 30px rgba(212, 175, 55, 0.4);
+      color: #0b0b12; box-shadow: 0 12px 30px rgba(212, 175, 55, 0.5);
     }
 
-    .premium-btn::after {
-      content: '';
-      position: absolute;
-      top: -2px; left: -2px; right: -2px; bottom: -2px;
-      border-radius: 50px;
-      border: 2px solid #d4af37;
-      opacity: 0;
-      animation: pulseGlow 2s infinite;
-      z-index: -1;
-    }
-
-    @keyframes pulseGlow {
-      0% { transform: scale(1); opacity: 0.6; }
-      50% { transform: scale(1.12); opacity: 0; }
-      100% { transform: scale(1); opacity: 0; }
-    }
-
-    /* قاعة السينما وتعتيم الأنوار */
+    /* قاعة العرض والتعتيم */
     .cinema-overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(3, 3, 5, 0.96);
-      backdrop-filter: blur(12px);
-      z-index: 99999;
-      opacity: 0;
-      transition: opacity 0.5s ease-in-out;
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.98); backdrop-filter: blur(15px);
+      z-index: 99999; opacity: 0; transition: opacity 0.5s ease;
     }
 
+    /* شاشة الموبايل بالطول (التعديل الأهم لحجم الفيديو) */
     .cinema-container {
-      position: absolute;
-      top: 50%;
-      left: 50%;
+      position: absolute; top: 50%; left: 50%;
       transform: translate(-50%, -50%) scale(0.9);
-      width: 92%;
-      max-width: 850px;
+      width: 95vw; /* عرض يملى الشاشة */
+      height: 85vh; /* طول يملى الشاشة */
+      max-width: 450px; /* عشان لو فتحته من الكمبيوتر ميبقاش شكله وحش */
       transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
-
     .cinema-overlay.active .cinema-container {
       transform: translate(-50%, -50%) scale(1);
     }
 
-    /* زرار إغلاق الشاشة */
-    .close-btn {
-      position: absolute;
-      top: -45px;
-      left: 5px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: #e0e0e0;
-      padding: 6px 16px;
-      font-size: 14px;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: all 0.2s ease;
+    /* شاشة العد التنازلي */
+    .countdown-screen {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: #0b0b12; border-radius: 20px; border: 2px solid #d4af37;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      font-size: 100px; font-weight: bold; color: #d4af37;
+      z-index: 10; box-shadow: inset 0 0 50px rgba(212, 175, 55, 0.2);
     }
-    .close-btn:hover {
-      background: #e63946;
-      color: #fff;
-      border-color: transparent;
-      box-shadow: 0 0 10px rgba(230, 57, 70, 0.4);
+    .countdown-text {
+      animation: popInOut 1s ease-in-out infinite;
+    }
+    @keyframes popInOut {
+      0% { transform: scale(0.5); opacity: 0; }
+      50% { transform: scale(1.2); opacity: 1; }
+      100% { transform: scale(1); opacity: 0; }
     }
 
-    /* الإطار الذهبي المشع حول الفيديو */
+    /* زرار الإغلاق */
+    .close-btn {
+      position: absolute; top: -45px; left: 0;
+      background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #fff; padding: 8px 20px; border-radius: 30px; cursor: pointer;
+      transition: 0.3s;
+    }
+    .close-btn:hover { background: #e63946; border-color: transparent; }
+
+    /* حاوية الفيديو الطولية */
     .video-wrapper {
-      position: relative;
-      padding-bottom: 56.25%;
-      height: 0;
-      box-shadow: 0 15px 50px rgba(212, 175, 55, 0.15), 0 25px 80px rgba(0,0,0,0.9);
-      border-radius: 16px;
-      overflow: hidden;
-      border: 2px solid #d4af37;
+      position: relative; width: 100%; height: 100%;
+      border-radius: 20px; overflow: hidden; border: 2px solid #d4af37;
+      box-shadow: 0 10px 40px rgba(212, 175, 55, 0.2);
     }
     .video-wrapper iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-
-    /* خلفية تأثير رموز العيد المتطايرة */
-    .particles-bg {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      z-index: 1;
-      pointer-events: none;
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;
     }
   </style>
 </head>
@@ -172,66 +129,121 @@
   <div class="particles-bg" id="particlesBg"></div>
 
   <div class="welcome-container">
-    <div class="eid-greeting">كل عيد أضحى وأنتي معايا يا نانسي ✨</div>
-    <button id="openCinemaBtn" class="premium-btn">
-      🎬 اضغطي هنا لمشاهدة عيدية السينما
-    </button>
+    <div id="typewriter" class="typewriter-text"></div>
+    
+    <div id="btnContainer" class="action-btn-container">
+      <button id="openCinemaBtn" class="premium-btn">
+        🎬 افتحي العيدية من هنا
+      </button>
+    </div>
   </div>
 
   <div id="cinemaOverlay" class="cinema-overlay">
     <div class="cinema-container">
-      <button id="closeCinemaBtn" class="close-btn">✕ إغلاق الشاشة</button>
+      <button id="closeCinemaBtn" class="close-btn">✕ إغلاق</button>
+      
+      <div id="countdownScreen" class="countdown-screen">
+        <span id="countdownNumber" class="countdown-text">3</span>
+      </div>
+
       <div class="video-wrapper">
-        <iframe id="cinemaVideo" src="https://drive.google.com/file/d/1sG9P_Q-AVSCd7jsyYttfDG1bsdRTRpxn/preview" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        <iframe id="cinemaVideo" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
       </div>
     </div>
   </div>
 
   <script>
+    // 1. تأثير الكتابة التلقائية (Typewriter)
+    const text = "كل عيد أضحى وأنتي معايا يا نانسي ✨";
+    const typewriterElement = document.getElementById('typewriter');
+    const btnContainer = document.getElementById('btnContainer');
+    let i = 0;
+
+    function typeWriter() {
+      if (i < text.length) {
+        typewriterElement.innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typeWriter, 100); // سرعة الكتابة
+      } else {
+        // إزالة مؤشر الكتابة وإظهار الزرار
+        typewriterElement.style.border = 'none';
+        setTimeout(() => {
+          btnContainer.classList.add('show');
+        }, 500);
+      }
+    }
+    
+    // تشغيل الكتابة بعد تحميل الصفحة بثانية
+    window.onload = () => {
+      createEidParticles();
+      setTimeout(typeWriter, 1000);
+    };
+
+    // 2. التحكم في السينما والعد التنازلي
     const openBtn = document.getElementById('openCinemaBtn');
     const closeBtn = document.getElementById('closeCinemaBtn');
     const overlay = document.getElementById('cinemaOverlay');
     const video = document.getElementById('cinemaVideo');
+    const countdownScreen = document.getElementById('countdownScreen');
+    const countdownNumber = document.getElementById('countdownNumber');
+    
+    // رابط الفيديو بتاعك
+    const videoUrl = "https://drive.google.com/file/d/1sG9P_Q-AVSCd7jsyYttfDG1bsdRTRpxn/preview";
 
-    // تأثير فتح السينما
     openBtn.addEventListener('click', () => {
       overlay.style.display = 'block';
       setTimeout(() => {
         overlay.style.opacity = '1';
         overlay.classList.add('active');
+        
+        // بدأ العد التنازلي 3.. 2.. 1..
+        let count = 3;
+        countdownNumber.innerText = count;
+        countdownScreen.style.display = 'flex';
+        video.src = ""; // تأكيد إن الفيديو مش شغال
+
+        const interval = setInterval(() => {
+          count--;
+          if (count > 0) {
+            countdownNumber.innerText = count;
+            // حركة صغيرة عشان الأنيميشن يشتغل تاني
+            countdownNumber.style.animation = 'none';
+            countdownNumber.offsetHeight; 
+            countdownNumber.style.animation = 'popInOut 1s ease-in-out infinite';
+          } else {
+            clearInterval(interval);
+            // إخفاء العد التنازلي وتشغيل الفيديو
+            countdownScreen.style.display = 'none';
+            video.src = videoUrl; // إضافة اللينك عشان يشتغل فوراً
+          }
+        }, 1000); // كل ثانية
+
       }, 20);
     });
 
-    // تأثير إغلاق السينما وإيقاف الصوت
+    // إغلاق الشاشة وإيقاف الفيديو
     closeBtn.addEventListener('click', () => {
       overlay.style.opacity = '0';
       overlay.classList.remove('active');
       setTimeout(() => {
         overlay.style.display = 'none';
-        
-        // إعادة إنعاش الـ iframe لإيقاف الفيديو تماماً
-        const currentSrc = video.src;
-        video.src = '';
-        video.src = currentSrc;
+        video.src = ""; // إيقاف الفيديو والصوت تماماً
       }, 500);
     });
 
-    // سكريبت لتوليد تأثير أجواء العيد في الخلفية
+    // 3. خلفية رموز العيد المتطايرة
     function createEidParticles() {
       const bg = document.getElementById('particlesBg');
-      const particleCount = 25; // عدد الأشكال اللي بتطير
-      const eidEmojis = ['🐑', '🎈', '✨', '🌙', '🎉']; // رموز العيد
-      
-      for(let i = 0; i < particleCount; i++) {
+      const eidEmojis = ['🐑', '🎈', '✨', '🌙', '🎉', '💖']; 
+      for(let j = 0; j < 25; j++) {
         const particle = document.createElement('div');
         particle.innerText = eidEmojis[Math.floor(Math.random() * eidEmojis.length)];
         particle.style.position = 'absolute';
-        particle.style.fontSize = Math.random() * 15 + 15 + 'px'; // أحجام مختلفة
+        particle.style.fontSize = Math.random() * 15 + 15 + 'px';
         particle.style.opacity = Math.random() * 0.6 + 0.2;
         particle.style.top = Math.random() * 100 + 'vh';
         particle.style.left = Math.random() * 100 + 'vw';
         
-        // حركة الطيران والدوران
         particle.animate([
           { transform: 'translateY(0) rotate(0deg)', opacity: particle.style.opacity },
           { transform: `translateY(-${Math.random() * 200 + 100}px) rotate(${Math.random() * 360}deg)`, opacity: 0 }
@@ -240,13 +252,9 @@
           iterations: Infinity,
           easing: 'ease-in-out'
         });
-        
         bg.appendChild(particle);
       }
     }
-    
-    // تشغيل التأثير فور تحميل الصفحة
-    window.addEventListener('DOMContentLoaded', createEidParticles);
   </script>
 </body>
 </html>
